@@ -3,10 +3,14 @@ library(dplyr)
 
 
 # set wd
-setwd("~/Documents/MusData/Data")
+#setwd("~/Documents/MusData/Data")
+setwd("C:/Eivind/OccupancyAbundanceCalibration/data")
 
 #read data
-KMdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
+#KMdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
+
+KMdata <- read.csv2("C:/Eivind/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
+
 str(KMdata)
 #get rid of NAs
 KMdata1 <- filter(KMdata, species == "GRAASIDEMUS")
@@ -93,6 +97,7 @@ KM2 <- left_join(KM1,uniqueid)
 # 1+2 = 3 "11"
 idch <- aggregate(check~year+month+station+tagged+id,data=KM2, FUN=sum)
 colnames(idch)[ncol(idch)] <- "category"
+
 # attach capture history
 KM3 <- idch
 KM3$c1 <- ifelse(KM3$category==2,0,1)
@@ -104,7 +109,7 @@ sex01 <- function(x) ifelse(is.na(x),NA,ifelse(x=="F",0,1))
 KM0$sex <- sapply(KM0$sex,sex01)
 
 # WEIGHT #
-Kweight <- aggregate(weight~id,data=KM0, FUN=mean.rm)
+Kweight <- aggregate(weight~id,data=KM0, FUN=median.rm)
 
 # add mean weight
 KM4 <- left_join(KM3,Kweight,"id")
@@ -125,6 +130,7 @@ KM6 <- arrange(left_join(KM5,tseason3),trapseason,station)
 KM7 <- left_join(KM6,uniqueid) # add original id name
 KM7$transect <- ifelse(KM7$transect=="MASOY","MASOY","PORSANGER")
 
-write.csv2(KM7, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv",sep = ",")
+#write.csv2(KM7, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv",sep = ",")
+write.csv2(KM7, "C:/Eivind/OccupancyAbundanceCalibration/data/CR_processed.csv",sep = ",")
 KM7$count <- 1
 crcounts <- aggregate(count~trapseason+date+station,data=KM7,sum)

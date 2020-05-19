@@ -1,8 +1,14 @@
-wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+#wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+wd <- "C:/Eivind/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+
 setwd(wd)
-dir()
+dir() # checking what files are in the directory
+
+# load packages
 library(dplyr)
 require(lubridate)
+
+#import data
 ctdata <- read.csv(dir()[1])
 
 filename <- ctdata$fileName[100]
@@ -37,10 +43,10 @@ datas[,2:4] <- sapply(datas[,2:4], factor2number)
 datas[,c(1,5)] <- sapply(datas[,c(1,5)], as.character)
 
 ctdata2 <- data.frame(datas,ctdata[,4:13])
-ctdata2$answer <- ifelse(ctdata2$confidence1>0.75,ctdata2$guess1,0)
+ctdata2$answer <- ifelse(ctdata2$confidence1>0.75,ctdata2$guess1,0)    # select only pictures with confidense above 75%
 
 ctdatax <- ctdata2[,c(1:5,11,16)]
-ctdatax$animal <- ifelse(ctdatax$answer>2,1,0)
+ctdatax$animal <- ifelse(ctdatax$answer>2,1,0)      # animal or not animal
 agganimal <- aggregate(animal~date, data=ctdatax,mean)
 agganimal$date <- as.Date(agganimal$date)
 agganimal$julian <- julian(as.Date(agganimal$date), origin=as.Date("2018-06-16"))
@@ -62,9 +68,9 @@ nrow(volescr)
 
 
 
-aggct1 <- aggregate(count~station+year+month+species, data=ctdata3, FUN=sum)
+aggct1 <- aggregate(count~station+year+month+species, data=ctdata3, FUN=sum) # doesn't work because count dosn't excist
 
-aggct2 <- arrange(aggct1,species,station,year,month)
+aggct2 <- arrange(aggct1,species,station,year,month) # dosen't work because the line above dosn't run
 
 
 #### vole data ####
@@ -81,7 +87,8 @@ volescr$week <- strftime(as.Date(volescr$date), format = "%V")
 
 
 stations <- unique(volescr$station)
-aggvoles <- aggregate(count~julianday+month, data=volescr,FUN=sum)
+volescr$count <- 1
+aggvoles <- aggregate(count~julianday+month, data=volescr,FUN=sum) # count still doesn't exist?
 
 monthlab <- c("July",      "August",    "September", "October",   "November",  "December",  "January",   "February", 
               "March",     "April",     "May",       "June",      "July", "August", "September")

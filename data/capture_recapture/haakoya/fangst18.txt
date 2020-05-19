@@ -1,0 +1,205 @@
+dato	periode	stasjon 	art	kode	kjønn	vekt	rep	merk	annet
+29.05.2018	june	8	f	1001	m	52	3	n	
+30.05.2018	june	9	f	1001	m	52	3		
+31.05.2018	june	14	f	1001	m	52	3		
+30.05.2018	june	16	f	1003	m	48	3	n	
+31.05.2018	june	17	f	1003	m	46	3		
+30.05.2018	june	42	f	1004	m	48	3	n	
+31.05.2018	june	43	f	1004	m	49	3		
+31.05.2018	june	8	f	1005	m	54	3	n	
+31.05.2018	june	42	f	1010	f	29	3	n	årsunge
+29.05.2018	june	16	f	2002	f	45	4	n	
+30.05.2018	june	17	f	2002	f	43	4		
+31.05.2018	june	16	f	2002	f	43	4		
+10.07.2018	july	18	f	484	m	53	3	n	
+12.07.2018	july	21	f	484	m	55	3		
+09.07.2018	july	29	f	536	f	27	2	n	
+12.07.2018	july	30	f	536	f	26	2		
+12.07.2018	july	27	f	568	f	30	2	n	
+12.07.2018	july	6	f	579	f	28	2	n	
+12.07.2018	july	41	f	587	n	40	3	n	
+12.07.2018	july	4	f	632	f	56	4	n	
+10.07.2018	july	41	f	666	f	36		n	døde
+09.07.2018	july	18	f	772	f	50	4	g	merket 2002, døde
+09.07.2018	july	14	f	4b6	m	45	3	n	
+12.07.2018	july	5	f	4b6	m	44	3		
+10.07.2018	july	6	f	5bb	m	42	3	n	
+12.07.2018	july	8	f	5bb	m	44	3		
+10.07.2018	july	15	f	6a6	m	47	3	n	
+12.07.2018	july	19	f	6a6	m	45	3	 	
+12.07.2018	july	33	f	6ad	f	26	2	n	
+10.07.2018	july	40	f	6ca	f	46	4	g	merket 1010
+12.07.2018	july	32	f	6ef		45	3	n	
+12.07.2018	july	11	f	76f	m	43	3	n	
+09.07.2018	july	15	f	79a	f	38	4	n	
+12.07.2018	july	42	f	79a	f	36	4		
+10.07.2018	july	30	f	7a4	m	47	3	n	
+12.07.2018	july	31	f	7a4	m	47	3		
+10.07.2018	july	33	f	7c4	f	29	2	n	
+12.07.2018	july	35	f	7c4	f	29	2		
+09.07.2018	july	19	f	7fa	f	21	1	n	
+12.07.2018	july	38	f	7fa	f	21	2		
+01.08.2018	august	39	f	438	f	33	2	n	
+02.08.2018	august	31	f	438	f	32	2		
+02.08.2018	august	32	f	439	f	30	2	n	
+02.08.2018	august	2	f	501	m	52	3	n	
+02.08.2018	august	13	f	520	f	48	2	n	
+31.07.2018	august	16	f	524	f	22	2	n	
+02.08.2018	august	45	f	524	f	24	2		
+31.07.2018	august	40	f	526	f	36	2	n	
+31.07.2018	august	37	f	530	m	32	3	n	
+02.08.2018	august	33	f	530	m	34	3		
+01.08.2018	august	17	f	542	f	24	1	n	
+31.07.2018	august	30	f	568	f	42	4	g	pels
+02.08.2018	august	30	f	568	f	42	1		
+01.08.2018	august	23	f	577	m	40	3	n	
+01.08.2018	august	8	f	579	f	50	3	g	
+01.08.2018	august	36	f	607	f	32	2	n	
+01.08.2018	august	42	f	618	f	31	2	n	
+02.08.2018	august	19	f	618	f	33	1		
+01.08.2018	august	10	f	688	f	22	2	n	
+02.08.2018	august	11	f	688	f	23	2		
+02.08.2018	august	14	f	768	f	35	1	n	
+31.07.2018	august	23	f	800	f	31	2	n	
+31.07.2018	august	42	f	46a	m	51	3	n	
+01.08.2018	august	18	f	46a	m	54	3	 	
+02.08.2018	august	17	f	46a	m	55	3		
+31.07.2018	august	45	f	47a	f	23	2	n	
+02.08.2018	august	41	f	47a	f	25	2		
+01.08.2018	august	4	f	47d	f	36	2	n	
+31.07.2018	august	15	f	4a4	f	38	3	n	
+01.08.2018	august	15	f	4a4	f	39	2		
+02.08.2018	august	15	f	4a4	f	39	1	 	
+02.08.2018	august	25	f	4ae	m	50	3	n	
+01.08.2018	august	2	f	4b6	m	49	3	g	pels
+02.08.2018	august	38	f	4c2	m	47	3	n	
+02.08.2018	august	12	f	4ea	m	50	3	n	
+31.07.2018	august	11	f	51a	f	20	2	n	
+01.08.2018	august	12	f	51a	f	21	2		
+02.08.2018	august	11	f	51a	f	21	2		
+01.08.2018	august	29	f	56b	f	42	4	g	
+31.07.2018	august	21	f	58e	m	32	3	n	
+01.08.2018	august	14	f	5c4	f	39	2	n	
+02.08.2018	august	18	f	5c4	f	40	1		
+01.08.2018	august	40	f	62a	f	35	2	n	
+02.08.2018	august	41	f	62a	f	37	2		
+01.08.2018	august	16	f	6a6	m	49	3	g	
+02.08.2018	august	16	f	6a6	m	48	3	 	
+01.08.2018	august	33	f	6b9	f	33	2	n	
+02.08.2018	august	23	f	6b9	f	35	1		
+31.07.2018	august	41	f	6ca	f	56	2	g	?
+02.08.2018	august	39	f	6ca	f	46	2		
+31.07.2018	august	39	f	6db	f	32	3	n	
+02.08.2018	august	49	f	6db	f		4		født 7 unger
+01.08.2018	august	31	f	6ef	m	52	3	g	
+02.08.2018	august	24	f	6ef	m	51	3		
+02.08.2018	august	37	f	73e	m	40	3	n	
+31.07.2018	august	43	f	79a	f	47	2	n	pels
+01.08.2018	august	45	f	79a	f	45	2		
+01.08.2018	august	28	f	7a4	m	57	3	g	
+02.08.2018	august	26	f	7a4	m	52	3		
+31.07.2018	august	11	f	7d7	f	21	2	n	
+01.08.2018	august	11	f	7d7	f	20	2	 	
+02.08.2018	august	11	f	7d7	f	22	2		
+02.08.2018	august	37	f	81b	f	31	2	n	
+03.09.2018	september	25	f	438	f	48	4	g	
+04.09.2018	september	25	f	438	f	42	4		
+05.09.2018	september	30		438	f	46	4		
+05.09.2018	september	32		439	f	47	1	g	
+03.09.2018	september	13	f	466	m	51	3	n	
+04.09.2018	september	13	f	466	m	46	3		
+05.09.2018	september	12	f	466	m	46	3		
+04.09.2018	september	20	f	487	f	42	4	n	
+05.09.2018	september	21	f	487	f	42	4		
+04.09.2018	september	10	f	520	f	42	1	g	
+04.09.2018	september	33	f	530	m	47	3	g	
+05.09.2018	september	33		530	m	47	3		
+03.09.2018	september	26	f	568	f	58	3	g	
+04.09.2018	september	6	f	579	f	45	4	g	
+04.09.2018	september	19	f	618	f	48	4	g	
+03.09.2018	september	4	f	632	f	50	4	g	
+04.09.2018	september	4	f	632	f	42	4		
+05.09.2018	september	4	f	632	f	46	4		
+03.09.2018	september	11	f	688	f	39	4	g	
+03.09.2018	september	34	f	689	f	49	4	g	
+04.09.2018	september	27	f	714	m	22	1	n	
+04.09.2018	september	18	f	721	f	35	4	g	
+04.09.2018	september	16	f	725	m	21	1	n	
+03.09.2018	september	43	f	761	f	43	4	n	
+05.09.2018	september	17	f	761	f	36	4		
+03.09.2018	september	14	f	768	f	48	4	g	
+05.09.2018	september	14	f	768	f	47	4		
+05.09.2018	september	44		783	f	22	1	n	
+04.09.2018	september	42	f	46a	m	53	3	g	
+05.09.2018	september	42		46a	m	54	3		
+05.09.2018	september	27	f	49b	m	16	1	n	
+03.09.2018	september	2	f	4b6	m	50	3	g	
+04.09.2018	september	5	f	4b6	m	47	3		
+05.09.2018	september	2	f	4b6	m	47	3		
+03.09.2018	september	38	f	4c2	m	52	3	g	
+05.09.2018	september	28	f	4c2	m	46	3		
+03.09.2018	september	12	f	4ea	m	54	3	g	
+04.09.2018	september	12	f	4ea	m	53	3		
+05.09.2018	september	9	f	4ea	m	47	3		
+03.09.2018	september	40	f	62a	f	41	4	g	
+04.09.2018	september	40	f	62a	f	40	4		
+05.09.2018	september	39		62a	f	39	4		
+03.09.2018	september	45	f	6a6	m	53	3	g	
+05.09.2018	september	45		6a6	m	50	3		
+04.09.2018	september	23	f	6b9	f	47	4	g	
+05.09.2018	september	34		6b9	f	48	4		
+03.09.2018	september	41	f	6ca	f	53	4	g	
+04.09.2018	september	41	f	6ca	f	41	4		
+05.09.2018	september	41		6ca	f	45	5		
+05.09.2018	september	19	f	6cc	f	12	1	n	
+03.09.2018	september	39	f	6db	f	43	4	g	
+04.09.2018	september	39	f	6db	f	40	4		
+05.09.2018	september	40		6db	f	40	4		
+04.09.2018	september	38	f	73e	m	49	3	g	
+04.09.2018	september	15	f	76e	m	49	3	n	
+04.09.2018	september	43	f	79a	f	42	4	g	
+04.09.2018	september	31	f	7a4	m	50	3	g	
+05.09.2018	september	29		7a4	m	43	3		
+03.09.2018	september	36	f	81b	f	45	4	g	
+04.09.2018	september	36	f	81b	f	39	4		
+05.09.2018	september	36		81b	f	37	4		
+05.09.2018	september	16	f	uuu	f	45	4	drept av røyskatt	
+13.09.2018	oktober	29	f	438	f	37	1	g	
+15.09.2018	oktober	26	f	438	f	38	5		
+13.09.2018	oktober	31	f	439	f	45	5	g	
+14.09.2018	oktober	29	f	439	f	41	5		
+15.09.2018	oktober	25	f	439	f	40	5		
+13.09.2018	oktober	8	f	477	m	23	1	n	
+14.09.2018	oktober	8	f	477	m	21	1		
+15.09.2018	oktober	8	f	477	m	23	1		
+14.09.2018	oktober	3	f	479	f	31	1	n	
+15.09.2018	oktober	10	f	538	f	22	1	g	
+13.09.2018	oktober	2	f	579	f	38	5	g	
+14.09.2018	oktober	2	f	579	f	38	1		
+15.09.2018	oktober	2	f	579	f	35	5		
+14.09.2018	oktober	12	f	662	m	24	1	n	
+14.09.2018	oktober	45	f	672	m	26	1	n	
+15.09.2018	oktober	11	f	688	f	32	5	g	
+13.09.2018	oktober	30	f	690	m	43	2	n	
+14.09.2018	oktober	16	f	725	m	25	1	g	
+15.09.2018	oktober	44	f	725	m	24	1		
+13.09.2018	oktober	16	f	761	f	35	1	g	
+13.09.2018	oktober	42	f	46a	m	51	2	g	
+15.09.2018	oktober	1	f	47c	f	23	1	n	
+13.09.2018	oktober	17	f	48a	f	23	1	n	
+15.09.2018	oktober	39	f	4c2	m	46	2	g	
+13.09.2018	oktober	45	f	51e	m	24	1	n	
+13.09.2018	oktober	11	f	54a	f	35	1	n	
+13.09.2018	oktober	49	f	5ca	f	24	1	n	
+13.09.2018	oktober	39	f	62a	f	37	1	g	
+14.09.2018	oktober	41	f	6ca	f	43	1	g	
+15.09.2018	oktober	40	f	6ca	f	43	5		
+13.09.2018	oktober	41	f	6db	f	35	1	g	
+13.09.2018	oktober	34	f	6fe	f	38	5	n	
+14.09.2018	oktober	34	f	6fe	f	39	5		
+15.09.2018	oktober	34	f	6fe	f	36	5		
+13.09.2018	oktober	32	f	73e	m	44	2	g	
+15.09.2018	oktober	45	f	79a	f	38	5	g	
+13.09.2018	oktober	37	f	81b	f	35	1	g	
+14.09.2018	oktober	38	f	81b	f	31	1		
+15.09.2018	oktober	36	f	81b	f	32	5		
