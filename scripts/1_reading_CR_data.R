@@ -1,7 +1,8 @@
 ### JOIN CAPTURE RECAPTURE DATASETS ###
 # import porsanger data
 # set working dir
-wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
+wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
+#wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
 setwd(wd)
 
 # set up command not in
@@ -92,7 +93,12 @@ formatGstations <- function(station_name)
   
   return(station_name)
 }
+# remove NA's (should look into why we have NA's in station names!)
+masdata <- masdata[!is.na(masdata$station),]
+
+
 masdata$station <- sapply(masdata$station,formatGstations)
 
 crdata <- rbind(masdata,pordata)
-write.csv2(crdata,"/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
+#write.csv2(crdata,"/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
+write.csv2(crdata,"C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
