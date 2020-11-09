@@ -14,7 +14,7 @@ ctdata <- rbind(ctdata1,ctdata2)
 
 datesplit <- function(filename)  # retrieve date and station from file name
 {
-  filename2 <- as.character(ctdata$fileName[1])
+  filename2 <- as.character(filename)
   string <- strsplit(filename2,"\\\\")
   string2 <- strsplit(string[[1]][3], "_")
   
