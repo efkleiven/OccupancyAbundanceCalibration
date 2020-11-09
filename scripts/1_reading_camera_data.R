@@ -1,30 +1,35 @@
 library(dplyr)
 library(lubridate)
 getwd()
-wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+#wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+
 setwd(wd)
 
-ctdata <- read.csv(dir()[1], stringsAsFactors = FALSE)
+dir()
+ctdata1 <- read.csv(dir()[2], stringsAsFactors = FALSE)
+ctdata2 <- read.csv(dir()[3], stringsAsFactors = FALSE)
+
+ctdata <- rbind(ctdata1,ctdata2)
 
 datesplit <- function(filename)  # retrieve date and station from file name
 {
-  filename2 <- as.character(filename)
-  string <- strsplit(filename2,"_")
+  filename2 <- as.character(ctdata$fileName[1])
+  string <- strsplit(filename2,"\\\\")
+  string2 <- strsplit(string[[1]][3], "_")
   
-  station1 <- string[[1]][2]
-  station2 <- strsplit(station1,"/")[[1]]
-  station3 <- station2[length(station2)]
+  station1 <- string2[[1]][1]
   
   #station4 <- strsplit(station3,"")[[1]]
   #station5 <- paste0(station4[2],station4[3])
   #station <- as.numeric(station5)
   
   
-  date1<- string[[1]][3]
+  date1<- string2[[1]][2]
   date2 <- strsplit(date1,"-")
-  outputdata <- c(station3,date2[[1]],date1)
+  outputdata <- c(station1,date2[[1]],date1)
   return(outputdata)
-}
+  }
 
 # join dataset with camera info 
 datas <- as.data.frame(t(sapply(ctdata$fileName,datesplit)))
@@ -54,13 +59,14 @@ ctdatax$species <- sapply(ctdatax$answer, FUN=whichsp)
 unique(ctdatax$answer)
 ctdatax$julian <- julian(as.Date(ctdatax$date), origin=as.Date("2018-06-15"))
 ctdatax$weekofyear <- as.numeric(strftime(as.Date(ctdatax$date), format = "%V"))
-filter(ctdatax,year==2019)
+filter(ctdatax,year==2019) #what does this line do? 
 
-write.csv2(ctdatax, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
+#write.csv2(ctdatax, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
+write.csv2(ctdatax, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
 
 ### additional exploratory stuff ###
 
-
+ # Eivind can't run most of the code below here?
 
 # aggregate
 aggct1 <- aggregate(count~station+year+month+species, data=ctdatax, FUN=sum)
