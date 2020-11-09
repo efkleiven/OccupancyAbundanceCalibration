@@ -2,11 +2,32 @@
 library(dplyr)
 
 #read data
-KMdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
+#KMdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
+KMdata <- read.csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
 
 #get rid of NAs
 KMdata1 <- KMdata
-KMdata1$weight <- as.numeric(KMdata1$weight)
+#KMdata1$weight <- as.numeric(KMdata1$weight) #this introduces a lot of NA's
+
+sum(is.na(KMdata1$weight))
+
+#replacing "lesser than" notation with numeric weights
+KMdata1$weight[KMdata1$weight=="<12"] <- 11
+KMdata1$weight[KMdata1$weight=="<10"] <- 10
+KMdata1$weight[KMdata1$weight==">10"] <- 10
+unique(KMdata1$weight)
+
+#make NA's a character to be able to run nchar
+KMdata1$weight[is.na(KMdata1$weight)] <- "mi"
+
+for(i in 1:length(KMdata1$weight)){
+if(nchar(KMdata1$weight[i])>2) { 
+  KMdata1$weight[i] <- strsplit(KMdata1$weight[i],",")[[1]][1]
+}}
+
+# set NA's back to NA
+KMdata1$weight[KMdata1$weight=="mi"] <- NA
+
 unique(KMdata1$datetime)
 
 ndate <- KMdata1$datetime[5]
@@ -136,7 +157,7 @@ KM7$julian <- julian(as.Date(KM7$date), origin=as.Date("2018-06-15"))
 KM7$weekofyear <- as.numeric(strftime(as.Date(KM7$date), format = "%V"))
 table(KM7$species)
 head(KM7)
-write.csv2(KM7, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv")
+write.csv2(KM7, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CR_processed.csv")
 
 KM7$count <- 1
 crcounts <- aggregate(count~trapseason+date+station,data=KM7,sum)
