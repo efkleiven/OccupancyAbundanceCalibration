@@ -6,14 +6,18 @@ library(scales)
 # install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 
 
-livetrapdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
-cameradata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
-abundance <- readRDS("/Users/pedronicolau/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
+#livetrapdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
+#cameradata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
+#abundance <- readRDS("/Users/pedronicolau/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
+
+livetrapdata <- read.csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
+cameradata <- read.csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
+abundance <- readRDS("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
+
 abundance[,3:4] <- round(abundance[,3:4],0)
 
 #### TIME FORMATTING ####
-
-cameradata$station <- sapply(cameradata$station, formatGstations)
+cameradata$station <- sapply(cameradata$station, formatGstations) # this function is in 1_reading_CR_data.R
 ctstations <- unique(cameradata$station)
 
 # voles only
@@ -51,15 +55,20 @@ camera_filtered <- arrange(filter(cameradata, julian %in% jdays), julian)
 camera2 <- left_join(camera_filtered, juliandf)
 cvoles <- filter(camera2, species == "vole")
 cvoles$count <- 1
+
 cvolesagg <- aggregate(count~station+year+date+julian+julianlabels+trapseason,data=cvoles, FUN=sum)
 cvolesagg2 <- arrange(cvolesagg,julian, station)
 
 ### convert counts on different days to variables
 i=1
-#seasnumber <- length(unique(cvolesagg2$trapseason))
-seasnumber <- 4
-for (i in 1:seasnumber)
-{
+seasnumber <- max(unique(cvolesagg2$trapseason))
+#seasnumber <- 9
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# something goes wrong in this loop!!! #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+for (i in 1:seasnumber){
   print(i)
   # filter by trap season
   camset <- filter(cvolesagg2, trapseason==i)
@@ -71,6 +80,22 @@ for (i in 1:seasnumber)
   camsetabs$station <- rownames(camsetabs)
   camsetabs$trapseason <- i
   rownames(camsetabs) <- NULL
+  
+  if(i==1) {
+  camsetabs$b1 <- NA
+  camsetabs$b2 <- NA}
+  
+  if(i==5) {
+    camsetabs$a1 <- 0
+    camsetabs$a2 <- 0
+    camsetabs$"02" <- 0}
+  
+  if(i==6) {
+    camsetabs$b1 <- 0
+    camsetabs$b2 <- 0
+    camsetabs$"01" <- 0}
+  
+  if(i==8) camsetabs$"01" <- 0
   if(i==1) aggcameradata <- camsetabs
   if(i>1) aggcameradata <- rbind(aggcameradata,camsetabs)
 }
@@ -79,6 +104,7 @@ for (i in 1:seasnumber)
 livedata$count <- 1
 # once again, add all combinations in such a way to get the zero captures
 livextabs <- as.data.frame(xtabs(count~station+trapseason, data=livedata), stringsAsFactors = FALSE)
+
 # formatting
 livextabs$trapseason <- as.numeric((livextabs$trapseason))
 colnames(livextabs)[3] <- "cr"
@@ -90,10 +116,13 @@ jointset2 <- arrange(jointset, station,trapseason)
 # add mean count for two days after 
 jointset2$after_2 <- apply(jointset2[,3:4],1,mean)
 jointset2$during_2 <- apply(jointset2[,1:2],1,mean)
+
 # add log variables
 jointset2$logafter_2 <- log(jointset2$after_2+1)
 jointset2$logcr <- log(jointset2$cr+1)
+
 # add abundance estimates
 jointset2_1 <- left_join(jointset2,abundance)
 
-saveRDS(jointset2_1, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/data_for_regression.rds")
+#saveRDS(jointset2_1, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/data_for_regression.rds")
+saveRDS(jointset2_1, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/data_for_regression.rds")
