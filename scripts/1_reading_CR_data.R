@@ -43,8 +43,6 @@ for(yr in 1:length(dir())) #check year in directory
   
 }
 
-
-
 # go through lists
 for(df in 1:length(porsdset))
 {
@@ -70,6 +68,7 @@ for(df in 1:length(porsdset))
   print(nrow(jointdata))
 
   }
+
 # uniformize names
 jointdata$transect[jointdata$transect%!in%c("1","2","3","4","5")] <- "MASOY"
 
@@ -102,3 +101,4 @@ masdata$station <- sapply(masdata$station,formatGstations)
 crdata <- rbind(masdata,pordata)
 #write.csv2(crdata,"/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
 write.csv2(crdata,"C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
+summary(crdata)

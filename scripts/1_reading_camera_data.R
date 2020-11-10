@@ -46,7 +46,7 @@ datas[,c(1,5)] <- sapply(datas[,c(1,5)], as.character)
 #combine data sets
 ctdata2 <- data.frame(datas,ctdata[,4:13])
 # keep only values with confidence above 0.75
-ctdata2$answer <- ifelse(ctdata2$confidence1>0.75,ctdata2$guess1,0)
+ctdata2$answer <- ifelse(ctdata2$confidence1>0.9,ctdata2$guess1,0)
 ctdata3 <- filter(ctdata2,answer>0)
 ctdatax <- ctdata3[,c(1:5,11,16)]
 # is it an animal
@@ -59,7 +59,6 @@ ctdatax$species <- sapply(ctdatax$answer, FUN=whichsp)
 unique(ctdatax$answer)
 ctdatax$julian <- julian(as.Date(ctdatax$date), origin=as.Date("2018-06-15"))
 ctdatax$weekofyear <- as.numeric(strftime(as.Date(ctdatax$date), format = "%V"))
-filter(ctdatax,year==2019) #what does this line do? 
 
 #write.csv2(ctdatax, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
 write.csv2(ctdatax, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
@@ -69,11 +68,11 @@ write.csv2(ctdatax, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/ca
  # Eivind can't run most of the code below here?
 
 # aggregate
+ctdatax$count <- 1
 aggct1 <- aggregate(count~station+year+month+species, data=ctdatax, FUN=sum)
 aggct2 <- arrange(aggct1,species,station,year,month)
 
-
-
+head(aggct2)
 
 ### 
 #### vole data ####
@@ -83,17 +82,10 @@ volescr$julianday <- julian(as.Date(volescr$date), origin=as.Date("2018-06-15"))
 
 volescr$month <- months(as.Date(volescr$date))
 
-
-
 stations <- unique(volescr$station)
 aggvoles <- aggregate(count~julianday+month, data=volescr,FUN=sum)
 
-monthlab <- c("July",      "August",    "September", "October",   "November",  "December",  "January",   "February", 
-              "March",     "April",     "May",       "June",      "July", "August", "September")
-axis(1, at=seq(1+15,480-15,30),
-     labels = monthlab, cex.axis = .7)
-
-aggvolesweek <- aggregate(count~week+year, data=volescr,FUN=sum)
+aggvolesweek <- aggregate(count~weekofyear+year, data=volescr,FUN=sum)
 aggvolesweek$julianweek <- aggvolesweek$jweek
 
 
@@ -106,23 +98,28 @@ print(sum(volesg00$count))
 volesg00$timepoint <- 1:nrow(volesg00)
 
 plot(count~timepoint,data=volesg00,pch=19, xaxt="n", xlab="month", type="b")
-axis(1, at=volesg01$timepoint, labels = volesg01$month, cex.axis = .7)
+axis(1, at=volesg00$timepoint, labels = volesg00$month, cex.axis = .7)
 
 unique(volesg00$station)
 volesg01$date <- as.Date(volesg01$date, "%m/%Y")
 
-plot(count ~ date, data=volesg01, xaxt = "n", pch=19)
+plot(count ~ date, data=volesg00, xaxt = "n", pch=19)
 sort(unique(KM10$station))
 sort(stations)
-KM10 <- KM7[KM7$station%in%stations,]
+
+KM10 <- KM8[KM8$station%in%stations,]
 crcounts <- aggregate(count~trapseason+date,data=KM10,sum)
 crcounts$julianday <- julian(as.Date(crcounts$date), origin=as.Date("2018-06-15"))
 
-plot(crcounts$julianday,crcounts$count,pch=19,cex=2,col="red",xlim=c(0,452),ylim=c(0,310),
+plot(crcounts$julianday,crcounts$count,pch=19,cex=2,col="red",xlim=c(0,820),ylim=c(0,310),
      ylab="Counts",xaxt="n", xlab="")
 points(aggvoles$julianday, aggvoles$count, pch=19,cex=1)
-monthlab <- c("J",      "A",    "S", "O",   "N",  "D",  "J",   "F", 
-              "M",     "A",     "M",       "J",      "J", "A", "S")
-legend(226,300,legend=c("Photos","CR Counts"),pch=19, col=c("black","red"),bty="n")
-axis(1, at=seq(1+15,480-15,30),
+#points(aggvolesweek$julianday, aggvolesweek$count, pch=19,cex=1, col="blue")
+monthlab <- c("J", "A", "S", "O", "N", "D", "J", "F", "M", "A", "M", "J",
+              "J", "A", "S", "O", "N", "D", "J", "F", "M", "A", "M", "J",
+              "J", "A", "S")
+axis(1, at=seq(1+15,820-15,30),
      labels = monthlab, cex.axis = .7)
+
+legend(626,300,legend=c("Photos","CR Counts"),pch=19, col=c("black","red"),bty="n")
+
