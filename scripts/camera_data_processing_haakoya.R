@@ -16,7 +16,7 @@ ctdata[[2]] <- read.csv(paste0(wd3,"/",dir(wd2)[2]))
 ctdata[[3]] <- read.csv(paste0(wd3,"/",dir(wd2)[3]))
 
 ctdata <- do.call(rbind, ctdata)
-
+head(ctdata)
 filename <- ctdata$fileName[1]
 datesplit <- function(filename)  # retrieve date and station from file name
 {
@@ -27,7 +27,10 @@ datesplit <- function(filename)  # retrieve date and station from file name
   station <- strsplit(string[[1]][3],"/")[[1]][3] # pick the stationID
   date <- string[[1]][4] # pick the date
   
-  outdf <- c(station, date, string2[3]) # collect the things you want the function to output
+  # remove last "'" 
+  newfilename1 <- strsplit(string2[3],"'")[[1]][1]
+  
+  outdf <- c(station, date, newfilename1) # collect the things you want the function to output
   return(outdf)
 } # end function
 
@@ -36,6 +39,7 @@ rownames(datesite) <- NULL
 head(datesite)
 
 names(datesite) <- c("site","date","NewFileName") # change colnames
+# NewFileName is needed to add the metadata
 
 datesite$date <- as.Date(datesite$date)
 datesite$day <- format(datesite$date, format = "%d")
