@@ -15,9 +15,10 @@ ctdata[[1]] <- read.csv(paste0(wd3,"/",dir(wd2)[1]))
 ctdata[[2]] <- read.csv(paste0(wd3,"/",dir(wd2)[2]))
 ctdata[[3]] <- read.csv(paste0(wd3,"/",dir(wd2)[3]))
 
+# convert list to data frame 
 ctdata <- do.call(rbind, ctdata)
-head(ctdata)
-filename <- ctdata$fileName[1]
+
+
 datesplit <- function(filename)  # retrieve date and station from file name
 {
   filename2 <- as.character(filename)
@@ -28,39 +29,46 @@ datesplit <- function(filename)  # retrieve date and station from file name
   date <- string[[1]][4] # pick the date
   
   # remove last "'" 
+  # obtain file name isolated
   newfilename1 <- strsplit(string2[3],"'")[[1]][1]
   
   outdf <- c(station, date, newfilename1) # collect the things you want the function to output
   return(outdf)
-} # end function
+} # end 
 
-datesite <- as.data.frame(t(sapply(ctdata$fileName,datesplit))) # run function and store as df
+# apply datesplit and store as df
+datesite <- as.data.frame(t(sapply(ctdata$fileName,datesplit)))
 rownames(datesite) <- NULL
-head(datesite)
-
-names(datesite) <- c("site","date","NewFileName") # change colnames
+names(datesite) <- c("site","date","NewFileName")
 # NewFileName is needed to add the metadata
 
 datesite$date <- as.Date(datesite$date)
-datesite$day <- format(datesite$date, format = "%d")
-datesite$month <- format(datesite$date, format="%m")
-datesite$year <- format(datesite$date, format="%Y")
-datesite$julian <- julian(datesite$date, origin=min(datesite$date)) #different origin than for porsanger
+# datesite$day <- format(datesite$date, format = "%d")
+# datesite$month <- format(datesite$date, format="%m")
+# datesite$year <- format(datesite$date, format="%Y")
+# datesite$julian <- julian(datesite$date, origin=min(datesite$date)) #different origin than for porsanger
 
 df <- cbind(ctdata,datesite) # merge date and site df with initial df
 head(df) # check that its ok
-write.csv(df,"data/haakoya_camera_nometadata.csv")
 
-#
-#0=bad quality, 1=empty, 2=bird, 3=vole, 4=least_weasel, 5=lemming, 6=shrew, 7=stoat, 
+# get species onto a column
+whichsp <- function(x) 
+  {label <- c("unknown", "empty", "bird", "vole", "least_weasel", "lemming", "shrew", "stoat")
+  return(label[x+1])}
+# apply whichsp 
+df$species <- sapply(df$answer,whichsp)
 
 # select images classified with more than 75% certainty
 df$answer <- ifelse(df$confidence1>0.75,df$guess1,0)
 
-df <- df[,-c(1:2,4:8,10:13)] # remove unuseful columns
-str(df)# check that the df is fine
+# df2 <- df[,-c(1:2,4:8,10:13)] # remove useless columns
+df3 <- df[,c(4,9,14,16,21)] # keep informative columns
 
-table(df$answer)
+# export data frame for metadata
+# write.csv(df3, "data/haakoya_camera_answer.csv")
+
+#### Plots ####
+
 
 # add column for vole, lemming, stoat and least weasel
 df$vole <- ifelse(df$answer==3,1,0)
