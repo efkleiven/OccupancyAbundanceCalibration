@@ -1,34 +1,41 @@
 # set working directory
-wd <- "Y:/bilder_smagnagerfotobokser/Data/MLWIC_classification"
-setwd(wd)
+#wd <- "Y:/bilder_smagnagerfotobokser/Data/MLWIC_classification"
+wd1 <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/"
+setwd(wd1)
+
+wd2 <- "data/cameratrap/haakoya"
 
 # look at files in the directory
-dir() 
+dir(wd2) 
 
+wd3 <- paste0(wd1,wd2)
 # import files from Komag based on file position in the folder
 ctdata <- list() 
-ctdata[[1]] <-read.csv(dir()[7]) 
-ctdata[[2]] <-read.csv(dir()[8])
+ctdata[[1]] <- read.csv(paste0(wd3,"/",dir(wd2)[1]))
+ctdata[[2]] <- read.csv(paste0(wd3,"/",dir(wd2)[2]))
+ctdata[[3]] <- read.csv(paste0(wd3,"/",dir(wd2)[3]))
 
-str(ctdata)
 ctdata <- do.call(rbind, ctdata)
 
+filename <- ctdata$fileName[1]
 datesplit <- function(filename)  # retrieve date and station from file name
 {
   filename2 <- as.character(filename)
   string <- strsplit(filename2,"_")        # split filename at _
+  string2 <- strsplit(filename2,"\\\\")[[1]] # split filename at \\\\
   
   station <- strsplit(string[[1]][3],"/")[[1]][3] # pick the stationID
   date <- string[[1]][4] # pick the date
   
-  outdf <- c(station, date) # collect the things you want the function to output
+  outdf <- c(station, date, string2[3]) # collect the things you want the function to output
   return(outdf)
 } # end function
 
 datesite <- as.data.frame(t(sapply(ctdata$fileName,datesplit))) # run function and store as df
+rownames(datesite) <- NULL
 head(datesite)
 
-names(datesite) <- c("site","date") # change colnames
+names(datesite) <- c("site","date","NewFileName") # change colnames
 
 datesite$date <- as.Date(datesite$date)
 datesite$day <- format(datesite$date, format = "%d")
@@ -38,6 +45,7 @@ datesite$julian <- julian(datesite$date, origin=min(datesite$date)) #different o
 
 df <- cbind(ctdata,datesite) # merge date and site df with initial df
 head(df) # check that its ok
+write.csv(df,"data/haakoya_camera_nometadata.csv")
 
 #
 #0=bad quality, 1=empty, 2=bird, 3=vole, 4=least_weasel, 5=lemming, 6=shrew, 7=stoat, 
