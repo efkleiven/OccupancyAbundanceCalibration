@@ -1,16 +1,17 @@
 ### JOIN CAPTURE RECAPTURE DATASETS ###
-# import porsanger data
+# import haakoya data
 # set working dir
-#wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
+# wd <- "/Users/pedronicolau/Documents/OccupancyAbundanceCalibration/"
 #wd <- "C:/Eivind/OccupancyAbundanceCalibration/data/capture_recapture/haakoya"
-wd <- "data/capture_recapture/haakoya"
+wd <- "data/capture_recapture/haakoya/processed"
 setwd(wd)
+
 
 # set up command not in
 '%!in%' <- function(x,y)!('%in%'(x,y))
 library(dplyr)
 library("readxl")
-library(xlsx)
+library(openxlsx)
 
 # go through the different years in folder porsanger
 # to retrieve the data and lump them together
