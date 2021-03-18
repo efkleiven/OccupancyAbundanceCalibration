@@ -13,6 +13,7 @@ ctlist <- list()
 listindex=0 # to track how long the list of data.frames will be
 str(ctlist)
 
+# combine meta data files
 for (i in 1:length(dirmet))
 {
   newdir <- dirmet[i]
@@ -27,16 +28,16 @@ for (i in 1:length(dirmet))
     ctlist[[listindex]] <- ct_data
   }
 }
-str(ctlist)
-
+# convert list into data frame
 metadf <- do.call(rbind, ctlist)
-metadf$SourceFile[1]
-data1$fileName[1]
 
+# add metadata variables to haakoya camera data
 cameratrap1 <- dplyr::left_join(data1, metadf, by="NewFileName")
+# format time and data
 cameratrap1$DateTimeOriginal <- strptime(cameratrap1$DateTimeOriginal,
                                           format="%Y:%m:%d %H:%M:%S", tz="CET") #Central European Time
 
+# remove unimportant variables
 cameratrap2 <- dplyr::select(cameratrap1, site, DateTimeOriginal,guess1, species, confidence1)
-head(cameratrap2)
-table(cameratrap2$site)
+
+write.csv(cameratrap2, "data/haakoya_cameradata_final.csv")

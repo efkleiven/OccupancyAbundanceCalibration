@@ -2,7 +2,8 @@
 # import porsanger data
 # set working dir
 #wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
-wd <- "C:/Eivind/OccupancyAbundanceCalibration/data/capture_recapture/haakoya"
+#wd <- "C:/Eivind/OccupancyAbundanceCalibration/data/capture_recapture/haakoya"
+wd <- "data/capture_recapture/haakoya"
 setwd(wd)
 
 # set up command not in
