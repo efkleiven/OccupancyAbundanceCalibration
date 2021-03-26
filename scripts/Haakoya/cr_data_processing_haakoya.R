@@ -36,14 +36,14 @@ names(hakoyR)[3] <- "trap"
 hakoyR2 <- select(hakoyR, date,period, trap,ind, sex, wgt,cap,com) # select vars
 
 # 3. add trapping session
-trapsessR <- tibble(date=unique(hakoyR$date), trapsession = rep(1:15,each=3))
+trapsessR <- tibble(date=sort(unique(hakoyR$date)), trapsession = rep(1:15,each=3), check=rep(1:3,15))
 hakoyR3 <- left_join(hakoyR2,trapsessR )
 
 # correct typo : 49 to 39
 fortyniner <- which(hakoyR3$trap==49)
 hakoyR3[fortyniner,"trap"] <- 39
 # 4. split traps into stations
-Rstations <- tibble(trap=1:45,station=c(rep(1,14),rep(2,7),rep(3,20),rep(2,4)), check=rep(1:3,15))
+Rstations <- tibble(trap=1:45,station=c(rep(1,14),rep(2,7),rep(3,20),rep(2,4)))
 hakoyR4 <- left_join(hakoyR3,Rstations)
 hakoyR4$trap <- as.character(hakoyR4$trap)
 ############  Jon Data  ############ 
@@ -66,7 +66,7 @@ hakoyJon2 <- select(hakoyJon, date,period, trap,ind, sex, wgt,cap,com, trapline)
 
 hakoyJon3 <- filter(hakoyJon2, date > "2018-01-01")
 # 5. obtain trapping session (different days)
-trapsessJ <- tibble(date=unique(hakoyJon3$date), trapsession = rep(1:15,each=3), check=rep(1:3,15))
+trapsessJ <- tibble(date=sort(unique(hakoyJon3$date)), trapsession = rep(1:15,each=3), check=rep(1:3,15))
 hakoyJon4 <- left_join(hakoyJon3,trapsessJ )
 
 # 6. correct line
