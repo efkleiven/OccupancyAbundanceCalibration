@@ -1,21 +1,23 @@
+library(dplyr)
+library(readr)
+
 ### JOIN CAPTURE RECAPTURE DATASETS ###
 # import porsanger data
 # set working dir
-wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
-#wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
+#wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
+wd <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/data/capture_recapture/porsanger"
 setwd(wd)
 
 # set up command not in
 '%!in%' <- function(x,y)!('%in%'(x,y))
-library(dplyr)
 
 # go through the different years in folder porsanger
 # to retrieve the data and lump them together
 ds <- 0 # set counter
 porsdset <- list() #empty list
 
-usefulvars <- c("year","area","seas","datetime","check","transect","station","trapnum",
-                "Nindnum","sex","status","weight","species","marked","note")
+#usefulvars <- c("year","area","seas","datetime","check","transect","station","trapnum",
+#                "Nindnum","sex","status","weight","species","marked","note")
 
 for(yr in 1:length(dir())) #check year in directory
 {
@@ -28,12 +30,14 @@ for(yr in 1:length(dir())) #check year in directory
   {
     ds <- ds+1 # increase counter
     # read data
-    data1 <- read.table(dir()[dset], header=T, sep="\t", stringsAsFactors = FALSE)
+    data1 <- read_delim(dir()[dset],delim="\t")
     # add year
     data1$year <- year
+    data1$transect <- as.character(data1$transect)
+    data1$station <- as.character(data1$station)
+    
     #remove useless var
     data2 <- select(data1, usefulvars)
-    
     # attach to list
     porsdset[[ds]] <- data2
     print(names(data2))
@@ -43,34 +47,8 @@ for(yr in 1:length(dir())) #check year in directory
   
 }
 
-# go through lists
-for(df in 1:length(porsdset))
-{
-  dataf <- porsdset[[df]]
-  
-  # # just because not all dataframes are the same
-  # if(ncol(dataf) > 16 ) dataf <- dataf[,1:16] #
-  # if(ncol(dataf) < 16 ) dataf <- data.frame(dataf[,1:8],indnum_old=NA,dataf[,9:15]) #reordering columns
-  
-  # to start off the data frame
-  if ( df == 1 )
-  {
-    jointdata <- dataf
-    cnames <- names(jointdata)
-  }
-  
-  if ( df != 1 )
-  {
-      # change names of columns
-      colnames(dataf) <- cnames
-      jointdata <- rbind(jointdata,dataf)
-  }
-  print(nrow(jointdata))
-
-  }
-
-# uniformize names
-jointdata$transect[jointdata$transect%!in%c("1","2","3","4","5")] <- "MASOY"
+# bind rows
+jointdata <- bind_rows(porsdset)
 
 ## split datasets by transect ##
 masdata <- filter(jointdata, transect=="MASOY")
@@ -93,12 +71,11 @@ formatGstations <- function(station_name)
   return(station_name)
 }
 # remove NA's (should look into why we have NA's in station names!)
-masdata <- masdata[!is.na(masdata$station),]
+# masdata <- masdata[!is.na(masdata$station),]
 
+masdata$station <- as.character(sapply(masdata$station,formatGstations))
 
-masdata$station <- sapply(masdata$station,formatGstations)
+crdata <- bind_rows(masdata,pordata)
 
-crdata <- rbind(masdata,pordata)
-#write.csv2(crdata,"/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
-write.csv2(crdata,"C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/joint_CRDATA.csv")
-summary(crdata)
+write.csv2(crdata,"/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CRDATA_raw.csv")
+#write.csv2(crdata,"C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CRDATA_raw.csv")
