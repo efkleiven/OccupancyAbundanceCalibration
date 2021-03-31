@@ -5,12 +5,11 @@ library(dplyr)
 #read data
 # KMdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
 # KMdata <- read.csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/joint_CRDATA.csv", stringsAsFactors = FALSE)
-
-wd <- "data/capture_recapture/haakoya/processed"
+wd <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed"
 setwd(wd)
 
 Hdata <- readr :: read_csv2("haakoya_crdata_4stations.csv")[,-1]
-
+unique(Hdata$station)
 #get rid of NAs
 Hdata1 <- Hdata
 
@@ -56,35 +55,23 @@ idch3 <- select(idch2, -category)
 #### START FROM HERE ####
 # old code 
 ### weight and sex ###
-KM0 <- left_join(KM1,idch) # original dataset with ids
-sex01 <- function(x) ifelse(is.na(x),NA,ifelse(x=="F",0,1))
+KM0 <- left_join(Hdata2,idch3) # original dataset with ids
+sex01 <- function(x) ifelse(is.na(x),NA,ifelse(x=="f",0,1))
 KM0$sex <- sapply(KM0$sex,sex01)
 
 # WEIGHT #
 median.rm <- function(x) median(x,na.rm=TRUE)
-Kweight <- aggregate(weight~id,data=KM0, FUN=median.rm)
+
+Kweight <- aggregate(wgt~id,data=KM0, FUN=median.rm)
 
 # add mean weight
-KM4 <- left_join(KM3,Kweight,"id")
+idch4 <- left_join(idch3,Kweight,"id")
 
 # add median sex
 Ksex <- aggregate(sex~id,data=KM0, FUN=median.rm)
 
-KM5 <- left_join(KM4,Ksex)
+idch5 <- left_join(idch4,Ksex)
 
-KM6 <- left_join(KM5,uniqueid) # add original id name
-KM6$transect <- ifelse(KM6$transect=="MASOY","MASOY","PORSANGER")
-KM7 <- left_join(KM6,tseason2[seq(1,nrow(tseason2)-1,2),])
-KM7$julian <- julian(as.Date(KM7$date), origin=as.Date("2018-06-15"))
-KM7$weekofyear <- as.numeric(strftime(as.Date(KM7$date), format = "%V"))
-table(KM7$species)
-
-write.csv2(KM7, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CR_processed.csv")
+idch6 <- left_join(idch5,uniqueid) # add original id name
 
 
-KM8 <- filter(KM7, !(species%in% c("ROYSKATT","SNOMUS")))
-KM8$count <- 1
-crcounts <- aggregate(count~trapseason+date+station,data=KM8,sum)
-summary(KM7)
-
-unique(KM7$date)
