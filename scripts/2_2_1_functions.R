@@ -3,16 +3,16 @@
 ###### FUNCTIONS ####
 
 # Standardize inla fitted set
-stdize <- function(matrix){
+stdize <- function(matrix, multiple=3){
   #set counter
   fit2 <- matrix
   j=1
-  for(i in seq(1,length(fit2),3)){ #matrix needs to be made of triplets
+  for(i in seq(1,length(fit2),multiple)){ #matrix needs to be made of triplets
     seqn <- i:(i+2)
     total <- sum(fit2[seqn])
     
     for(j in seqn) fit2[j]<- fit2[j]/total
-    j=j+3
+    j=j+multiple
   }
   return(fit2)
 }
@@ -30,31 +30,6 @@ makedf <- function(df){
 
 # Horvitz-Thompson Estimator
 HT <- function(x) sum(1/(1-x)) #x is the probability of 0,0
-
-#Obtain Partial N sequence using the HT Estimator
-# partialN <- function(p00.st.tp){
-#   df <- p00.st.tp
-#   colnames(df) <- c("p00","st","tp")
-#   N <- c()
-#   
-#   sts <- sort(unique(df$st))
-# 
-#   for(s in 1:length(sts)){
-#     print(sts[s])
-#     df_st <- filter(df, st == sts[s])
-#     
-#     for (t in sort(unique(df_st$tp)))
-#     {
-#       df_tp <- filter(df_st, tp == t)
-#       nt <- HT(df_tp$p00)
-#       
-#       N <- c(N,nt)
-#       
-#     }
-#   }
-#   
-#   return(N)
-# }
 
 partialN <- function(p00.st.tp){
   df <- p00.st.tp
