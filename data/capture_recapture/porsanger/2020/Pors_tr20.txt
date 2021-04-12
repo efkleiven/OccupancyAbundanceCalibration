@@ -1,319 +1,46 @@
-year	area	seas	datetime	check	transect	station	trapnum	Nindnum	sex	status	weight	species	marked	note	
-Z20	PORS	SPRING	180620	1	1	3	1D	UNMA	F	P	33	GRAASIDEMUS	N	DEAD, 6EMB	
-Z20	PORS	SPRING	190620	2	1	3	3A	FB85A	F	P	32	GRAASIDEMUS	N		
-Z20	PORS	SPRING	190620	2	3	1	4D	FB9D7	M	S	28	GRAASIDEMUS	FALL19		
-Z20	PORS	SPRING	180620	1	2	1	4C	B65B	F	PERF	36	GRAASIDEMUS	FALL19		
-Z20	PORS	SPRING	180620	1	2	1	4B	F5CF	M	S	31	GRAASIDEMUS	FALL19		
-Z20	PORS	SPRING	180620	1	1	2	2B	3182	F	L	30	GRAASIDEMUS	N		
-Z20	PORS	SPRING	180620	1	1	3	4D	B62B	M	S	30	GRAASIDEMUS	FALL19		
-Z20	PORS	SPRING	180620	1	1	3	4D	EC8E	M	S	28	GRAASIDEMUS	N		
-Z20	PORS	SPRING	190620	2	1	2	2B	3182	F	L	30	GRAASIDEMUS			
-Z20	PORS	SPRING	190620	2	2	1	4B	EFB5	M	S	36	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	5	1	4A	B9F0	F	PL	24	ROEDMUS	N		
-Z20	PORS	FALL	100920	1	2	1	3C	UNMB	NA	NA	NA	NA	EATEN BY MUSTELID		
-Z20	PORS	FALL	100920	1	2	1	3B	B967	M	A	18	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	2	1	2C	B90F	F	NP	15	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	2	1	2B	EFB5	M	S	40	GRAASIDEMUS	SUM20		
-Z20	PORS	FALL	100920	1	2	2	3C	B911	M	A	20	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	2	2	4C	BADB	M	S	32	GRAASIDEMUS	SUM20		
-Z20	PORS	FALL	100920	1	1	2	4A	B89E	M	A	21	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	1	3	1D	B994	M	A	18	GRAASIDEMUS	N		
-Z20	PORS	FALL	110920	2	3	1	3B	BB00	M	A	15	ROEDMUS	N		
-Z20	PORS	FALL	110920	2	1	2	1D	B89E	M	A	22	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	2	1	3D	1EA4	F	NP	20	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	2	1	3B	ABA6	F	PL	37	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	2	1	2C	EFB5	M	S	40	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	2	1	2B	B90F	F	NP	12	GRAASIDEMUS		DEAD	
-Z20	PORS	FALL	110920	2	2	2	4D	BADB	M	S	32	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	5	1	1C	B9F0	F	PL	21	ROEDMUS		DEAD	
-Z20	PORS	FALL	100920	1	5	2	4D	2200	F	NP	16	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	3	2	2C	2781	F	NP	16	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	3	2	4D	3261	M	S	17	ROEDMUS	N		
-Z20	PORS	FALL	100920	1	2	1	4C	B89A	F	P	43	GRAASIDEMUS	SUM20		
-Z20	PORS	FALL	100920	1	2	1	4C	UNMC	M	A	9	GRAASIDEMUS	N	DEAD	
-Z20	PORS	FALL	100920	1	2	1	4B	1EA4	F	NP	18	GRAASIDEMUS	N		
-Z20	PORS	FALL	100920	1	2	1	4D	UNMD	M	A	9	GRAASIDEMUS	N	DEAD	
-Z20	PORS	FALL	100920	1	2	2	1D	BC11	M	S	36	GRAASIDEMUS	SUM20		
-Z20	PORS	FALL	100920	1	1	2	2D	3182	F	L	34	GRAASIDEMUS	SUM20		
-Z20	PORS	FALL	110920	2	1	2	2B	3182	F	L	35	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	1	2	2D	F73D	M	A	16	GRAASIDEMUS	N		
-Z20	PORS	FALL	110920	2	1	3	2D	B994	M	A	18	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	1	3	1B	28A2	M	A	23	GRAASIDEMUS	N		
-Z20	PORS	FALL	110920	2	2	2	2D	UNMMUSTA	NA	NA	NA	NA	NA	MUSTELA NIVALIS	
-Z20	PORS	FALL	110920	2	2	2	1D	UNME	M	S	37	GRAASIDEMUS	N		
-Z20	PORS	FALL	110920	2	2	2	1D	UNMMUSTB	NA	NA	NA	NA	NA	MUSTELA NIVALIS	
-Z20	PORS	FALL	110920	2	3	2	2C	2781	F	NP	17	GRAASIDEMUS			
-Z20	PORS	FALL	110920	2	3	2	4A	3261	M	A/S	18	ROEDMUS			
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
+year	area	seas	datetime	check	transect	station	trapnum	Nindnum	sex	status	weight	species	marked	note
+Z20	PORS	SPRING	180620	1	1	3	1D	UNMA	F	P	33	GRAASIDEMUS	N	DEAD, 6EMB
+Z20	PORS	SPRING	190620	2	1	3	3A	FB85A	F	P	32	GRAASIDEMUS	N	
+Z20	PORS	SPRING	190620	2	3	1	4D	FB9D7	M	S	28	GRAASIDEMUS	FALL19	
+Z20	PORS	SPRING	180620	1	2	1	4C	B65B	F	PERF	36	GRAASIDEMUS	FALL19	
+Z20	PORS	SPRING	180620	1	2	1	4B	F5CF	M	S	31	GRAASIDEMUS	FALL19	
+Z20	PORS	SPRING	180620	1	1	2	2B	3182	F	L	30	GRAASIDEMUS	N	
+Z20	PORS	SPRING	180620	1	1	3	4D	B62B	M	S	30	GRAASIDEMUS	FALL19	
+Z20	PORS	SPRING	180620	1	1	3	4D	EC8E	M	S	28	GRAASIDEMUS	N	
+Z20	PORS	SPRING	190620	2	1	2	2B	3182	F	L	30	GRAASIDEMUS		
+Z20	PORS	SPRING	190620	2	2	1	4B	EFB5	M	S	36	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	5	1	4A	B9F0	F	PL	24	ROEDMUS	N	
+Z20	PORS	FALL	100920	1	2	1	3C	UNMB	NA	NA	NA	NA	EATEN BY MUSTELID	
+Z20	PORS	FALL	100920	1	2	1	3B	B967	M	A	18	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	2	1	2C	B90F	F	NP	15	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	2	1	2B	EFB5	M	S	40	GRAASIDEMUS	SUM20	
+Z20	PORS	FALL	100920	1	2	2	3C	B911	M	A	20	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	2	2	4C	BADB	M	S	32	GRAASIDEMUS	SUM20	
+Z20	PORS	FALL	100920	1	1	2	4A	B89E	M	A	21	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	1	3	1D	B994	M	A	18	GRAASIDEMUS	N	
+Z20	PORS	FALL	110920	2	3	1	3B	BB00	M	A	15	ROEDMUS	N	
+Z20	PORS	FALL	110920	2	1	2	1D	B89E	M	A	22	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	2	1	3D	1EA4	F	NP	20	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	2	1	3B	ABA6	F	PL	37	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	2	1	2C	EFB5	M	S	40	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	2	1	2B	B90F	F	NP	12	GRAASIDEMUS		DEAD
+Z20	PORS	FALL	110920	2	2	2	4D	BADB	M	S	32	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	5	1	1C	B9F0	F	PL	21	ROEDMUS		DEAD
+Z20	PORS	FALL	100920	1	5	2	4D	2200	F	NP	16	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	3	2	2C	2781	F	NP	16	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	3	2	4D	3261	M	S	17	ROEDMUS	N	
+Z20	PORS	FALL	100920	1	2	1	4C	B89A	F	P	43	GRAASIDEMUS	SUM20	
+Z20	PORS	FALL	100920	1	2	1	4C	UNMC	M	A	9	GRAASIDEMUS	N	DEAD
+Z20	PORS	FALL	100920	1	2	1	4B	1EA4	F	NP	18	GRAASIDEMUS	N	
+Z20	PORS	FALL	100920	1	2	1	4D	UNMD	M	A	9	GRAASIDEMUS	N	DEAD
+Z20	PORS	FALL	100920	1	2	2	1D	BC11	M	S	36	GRAASIDEMUS	SUM20	
+Z20	PORS	FALL	100920	1	1	2	2D	3182	F	L	34	GRAASIDEMUS	SUM20	
+Z20	PORS	FALL	110920	2	1	2	2B	3182	F	L	35	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	1	2	2D	F73D	M	A	16	GRAASIDEMUS	N	
+Z20	PORS	FALL	110920	2	1	3	2D	B994	M	A	18	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	1	3	1B	28A2	M	A	23	GRAASIDEMUS	N	
+Z20	PORS	FALL	110920	2	2	2	2D	UNMMUSTA	NA	NA	NA	NA	NA	MUSTELA NIVALIS
+Z20	PORS	FALL	110920	2	2	2	1D	UNME	M	S	37	GRAASIDEMUS	N	
+Z20	PORS	FALL	110920	2	2	2	1D	UNMMUSTB	NA	NA	NA	NA	NA	MUSTELA NIVALIS
+Z20	PORS	FALL	110920	2	3	2	2C	2781	F	NP	17	GRAASIDEMUS		
+Z20	PORS	FALL	110920	2	3	2	4A	3261	M	A/S	18	ROEDMUS		
