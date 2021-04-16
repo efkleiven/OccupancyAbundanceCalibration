@@ -4,7 +4,7 @@ library(dplyr)
 library(INLA)
 
 # set working directory
-crdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
+crdata <- read.csv2("/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
 
 crdata2 <- crdata
 
@@ -57,6 +57,7 @@ inladata3$id_re <- idre
 inladata3$station.i <- NA
 inladata3$station.i[seq(1,nrow(inladata3),3)] <-as.character(inladata3$station[seq(1,nrow(inladata3),3)])
 
-data4inla <- inladata3
+data4inla <- tibble(inladata3[,-1])
 
 saveRDS(data4inla,"/Users/pedronicolau/OccupancyAbundanceCalibration/data/porsanger_inlaformat.rds")
+

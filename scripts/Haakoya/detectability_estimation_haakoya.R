@@ -164,7 +164,6 @@ rawts2 <- arrange(rawts,station,trapsession)
 colnames(rawts2)[3] <- "counts"
 rawts2$trapsession <- as.numeric(rawts2$trapsession)
 
-tibble(estimatedf2)
 
 estimatedf3 <- left_join(estimatedf2,rawts2)
 
