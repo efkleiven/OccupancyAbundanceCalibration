@@ -45,6 +45,51 @@ whichsp <- function(x)
 return(label[x+1])}
 # apply whichsp 
 cameratrap2$species <- sapply(cameratrap2$guess1,whichsp)
-table(cameratrap2$species)
+
+lubridate:: round_date(cameratrap1$DateTimeOriginal[2],unit="5 seconds")
+cameratrap1$DateTimeOriginal[1]
 
 saveRDS(cameratrap2, "data/cameratrap/haakoya/processed/haakoya_cameradata_final.rds")
+
+### start from here ###
+cameratrap2 <- readRDS("data/cameratrap/haakoya/processed/haakoya_cameradata_final.rds")
+library(dplyr)
+tibble(cameratrap2)
+
+ct0 <- arrange(cameratrap2,site,DateTimeOriginal)
+ct1 <- filter(ct0, DateTimeOriginal > as.Date("2018-05-20"))
+
+# compute differences between adjacent times
+difference <- diff(ct1$DateTimeOriginal)
+# which are due to camera settings
+dif5 <- which(difference<2)
+
+# slice set of "duplicated" rows
+dupnumbers <- sort(c(dif5,dif5+1))
+duplicates <- ct1[dupnumbers,]
+duplicates$id <- rep(1:(nrow(duplicates)/2), each=2)
+
+# check manually what data is repeated
+#checkcombs <- function(x) paste0(sort(x), sep="", collapse="")
+#check0 <- aggregate(guess1~id+site, data=duplicates, FUN=checkcombs)
+#table(check0$guess1)
+
+# sort by site and confidence
+duplicates2 <- arrange(duplicates, site,id,confidence1)
+diff(duplicates2$confidence1)
+# highest confidence is on even rows
+evenpos <- seq(2,nrow(duplicates2),2)
+duplicates3 <- slice(duplicates2, evenpos)
+# remove now useless variable
+duplicates4 <- select(duplicates2, -"id")
+# retrieve non duplicates
+non_dups <- slice(ct1, -dupnumbers)
+# join all datasets
+cameratrap3 <- arrange(bind_rows(duplicates3, non_dups), site, DateTimeOriginal)
+nrow(distinct(cameratrap3, site, DateTimeOriginal))
+rownames(cameratrap3) <- NULL
+
+# there are 3 repeated rows still
+
+saveRDS(tibble(cameratrap3), "data/cameratrap/haakoya/processed/haakoya_cameradata_nodup.rds")
+
