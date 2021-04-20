@@ -97,10 +97,9 @@ trapsessR$who <- "R"
 jointtraps <- bind_rows(trapsessJ,trapsessR)
 saveRDS(jointtraps, "haakoya_trap_dates.rds")
 
-radius <- read.csv("data/capture_recapture/haakoya/haakoya_stations_radius.csv")
-
+radius <- read.csv("data/capture_recapture/haakoya/haakoya_stations_radius.csv")[,-1]
+getwd()
 hakoydat3 <- read.csv2("haakoya_crdata_4stations.csv")[,-1]
 hakoydat3$year <- lubridate::year(hakoydat3$date)
 hakoydat4 <- left_join(hakoydat3, radius)
-saveRDS(hakoydat4,"haakoya_crdata_wradius.csv")
-
+saveRDS(hakoydat4,"haakoya_crdata_wradius.rds")
