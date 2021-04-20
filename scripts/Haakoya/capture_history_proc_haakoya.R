@@ -8,19 +8,19 @@ library(dplyr)
 wd <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed"
 setwd(wd)
 
-Hdata <- readr :: read_csv2("haakoya_crdata_4stations.csv")[,-1]
+# Hdata <- readr :: read_csv2("haakoya_crdata_4stations.csv")[,-1]
+Hdata <- readRDS("haakoya_crdata_wradius.rds")
+
 unique(Hdata$station)
 #get rid of NAs
 Hdata1 <- Hdata
 
-unique(Hdata1$trap)
-filter(Hdata1, trap=="8d")
 ##### CODE CAPTURE HISTORY #####
 
 
 #### repeated observation ####
 ### UNIQUE ID OF INDIVIDUALS ###
-uniqueid <- distinct(Hdata1,ind,trapsession,station)
+uniqueid <- distinct(Hdata1,ind,trapsession,station,s25,s50,s100)
 
 uniqueid$id <- 1:nrow(uniqueid)
 # attach labels for the different individuals according to
@@ -72,6 +72,7 @@ Ksex <- aggregate(sex~id,data=KM0, FUN=median.rm)
 idch5 <- left_join(idch4,Ksex)
 
 idch6 <- left_join(idch5,uniqueid) # add original id name
+srad <- distinct(Hdata2, id, s25,s50,s100)
+idch7 <- left_join(idch6, srad)
+saveRDS(idch7, "CH_Haakoya_withcovs_radius.rds")
 
-saveRDS(idch6, "CH_Haakoya_withcovs.rds")
-getwd()
