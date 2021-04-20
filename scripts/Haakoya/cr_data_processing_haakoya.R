@@ -1,11 +1,11 @@
 ### JOIN CAPTURE RECAPTURE DATASETS HÅKØYA ###
 # import haakoya data
 # set working dir
-#wd <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/"
+wd <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/"
 #wd <- "C:/Eivind/OccupancyAbundanceCalibration/data/capture_recapture/haakoya"
 wd <- "data/capture_recapture/haakoya/processed"
 setwd(wd)
-
+getwd()
 # set up command not in
 #'%!in%' <- function(x,y)!('%in%'(x,y))
 
@@ -89,3 +89,18 @@ novoles2 <- which(hakoydat$ind=="NA")
 hakoydat3 <- hakoydat2[-novoles2,]
 
 write.csv2(hakoydat3,"haakoya_crdata_4stations.csv")
+
+
+#### write dataset with dates and trap session ####
+trapsessJ$who <- "J"
+trapsessR$who <- "R"
+jointtraps <- bind_rows(trapsessJ,trapsessR)
+saveRDS(jointtraps, "haakoya_trap_dates.rds")
+
+radius <- read.csv("data/capture_recapture/haakoya/haakoya_stations_radius.csv")
+
+hakoydat3 <- read.csv2("haakoya_crdata_4stations.csv")[,-1]
+hakoydat3$year <- lubridate::year(hakoydat3$date)
+hakoydat4 <- left_join(hakoydat3, radius)
+saveRDS(hakoydat4,"haakoya_crdata_wradius.csv")
+
