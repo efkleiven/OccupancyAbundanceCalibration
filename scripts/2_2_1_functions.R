@@ -31,27 +31,42 @@ makedf <- function(df){
 # Horvitz-Thompson Estimator
 HT <- function(x) sum(1/(1-x)) #x is the probability of 0,0
 
-partialN <- function(p00.st.tp){
-  df <- p00.st.tp
-  colnames(df) <- c("p00","st","tp")
-  
-  newdata <- distinct(p00.st.tp[,2:3]) ; colnames(newdata) <- c("station","timepoint")
-  newdata$N.est <- NA
+df <- inladf
+partialN_radius <- function(df, radius=TRUE){
 
-  sts <- sort(unique(df$st))
-  c <- 1
-  for(s in 1:length(sts)){
-    print(sts[s])
-    df_st <- filter(df, st == sts[s])
+   # use HT estimator on pre-defined traps
+  newdata0 <- aggregate(p00.est~station+trapsession, data=df, FUN=HT)
+  estimatedf0 <- as.data.frame(xtabs(p00.est~trapsession+station, data=newdata0), stringsAsFactors = FALSE)
+  colnames(estimatedf0)[3] <- "N.est"
+
+  if(radius==TRUE)
+  {
+    # use HT estimator on <=25 m animals 
+  df0 <- filter(df, s25==1)
+  newdata <- aggregate(p00.est~station+trapsession, data=df0, FUN=HT)
+  newdata2 <- as.data.frame(xtabs(p00.est~trapsession+station, data=newdata), stringsAsFactors = FALSE)
+  colnames(newdata2)[3] <- "N25"
   
-    for (timep in sort(unique(df_st$tp)))
-    {
-      df_tp <- filter(df_st, tp == timep)
-      nt <- HT(df_tp$p00)
-      
-      newdata$N.est[newdata$station==sts[s]&newdata$timepoint==timep] <- nt
-    }
+   # use HT estimator on <=50 m animals 
+  df0 <- filter(df, s50==1)
+  newdata3 <- aggregate(p00.est~station+trapsession, data=df0, FUN=HT)
+  newdata4 <- as.data.frame(xtabs(p00.est~trapsession+station, data=newdata3), stringsAsFactors = FALSE)
+  colnames(newdata4)[3] <- "N50"
+  
+   # use HT estimator on <=100  m animals 
+  
+  df0 <- filter(df, s100==1)
+  newdata5 <- aggregate(p00.est~station+trapsession, data=df0, FUN=HT)
+  newdata6 <- as.data.frame(xtabs(p00.est~trapsession+station, data=newdata5), stringsAsFactors = FALSE)
+  colnames(newdata6)[3] <- "N100"
+  
+  estimatedf01 <- left_join(newdata2,newdata4)
+  estimatedf02 <- left_join(estimatedf01,newdata6)
+  estimatedf03 <- left_join(estimatedf02,estimatedf0)
+  
   }
   
-  return(newdata)
+  estimatedf03[,] <- as.data.frame(apply(estimatedf03[,], 2, FUN=as.numeric))
+  
+  return(estimatedf03)
 }
