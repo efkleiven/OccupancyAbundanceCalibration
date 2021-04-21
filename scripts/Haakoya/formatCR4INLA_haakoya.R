@@ -3,7 +3,7 @@ library(dplyr)
 # library(INLA)
 
 # set working directory
-crdata <- readRDS("~/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed/CH_Haakoya_withcovs.rds")
+crdata <- readRDS("~/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed/CH_Haakoya_withcovs_radius.rds")
 
 
 crdata2 <- crdata
@@ -59,4 +59,4 @@ inladata3$station.i <- NA
 inladata3$station.i[seq(1,nrow(inladata3),7)] <-as.character(inladata3$station[seq(1,nrow(inladata3),7)])
 
 
-saveRDS(inladata3,"~/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed/haakoya_inlaformat.rds")
+saveRDS(inladata3,"~/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed/haakoya_inlaformat2.rds")
