@@ -8,19 +8,19 @@ library(dplyr)
 wd <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/data/capture_recapture/haakoya/processed"
 setwd(wd)
 
-Hdata <- readr :: read_csv2("haakoya_crdata_4stations.csv")[,-1]
+# Hdata <- readr :: read_csv2("haakoya_crdata_4stations.csv")[,-1]
+Hdata <- readRDS("haakoya_crdata_wradius.rds")
+
 unique(Hdata$station)
 #get rid of NAs
 Hdata1 <- Hdata
 
-unique(Hdata1$trap)
-filter(Hdata1, trap=="8d")
 ##### CODE CAPTURE HISTORY #####
 
 
 #### repeated observation ####
 ### UNIQUE ID OF INDIVIDUALS ###
-uniqueid <- distinct(Hdata1,ind,trapsession,station)
+uniqueid <- distinct(Hdata1,ind,trapsession,station,s25,s50,s100)
 
 uniqueid$id <- 1:nrow(uniqueid)
 # attach labels for the different individuals according to
@@ -52,26 +52,27 @@ chlabel <- tibble(category=c(1,3,5,8,6,4,9), c1=c(1,0,0,0,1,1,1), c2=c(0,1,0,1,0
 idch2 <- left_join(idch,chlabel,by="category")
 idch3 <- select(idch2, -category)
 
-#### START FROM HERE ####
-# old code 
 ### weight and sex ###
 KM0 <- left_join(Hdata2,idch3) # original dataset with ids
 sex01 <- function(x) ifelse(is.na(x),NA,ifelse(x=="f",0,1))
+# turn sex into 0 1 variables
 KM0$sex <- sapply(KM0$sex,sex01)
 
-# WEIGHT #
-median.rm <- function(x) median(x,na.rm=TRUE)
 
+# function to retrieve median weigth
+median.rm <- function(x) median(x,na.rm=TRUE)
+# aggregate as function of id
 Kweight <- aggregate(wgt~id,data=KM0, FUN=median.rm)
 
-# add mean weight
+# add median weight
 idch4 <- left_join(idch3,Kweight,"id")
 
 # add median sex
 Ksex <- aggregate(sex~id,data=KM0, FUN=median.rm)
-
 idch5 <- left_join(idch4,Ksex)
 
 idch6 <- left_join(idch5,uniqueid) # add original id name
-
+srad <- distinct(Hdata2, id, s25,s50,s100)
+idch7 <- left_join(idch6, srad)
+saveRDS(idch7, "CH_Haakoya_withcovs_radius.rds")
 
