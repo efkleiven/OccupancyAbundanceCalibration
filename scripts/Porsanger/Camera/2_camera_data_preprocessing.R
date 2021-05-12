@@ -1,7 +1,7 @@
 setwd("..")
 getwd()
 library(dplyr)
-porscamera <- readRDS("processed/porsanger_imported.rds")
+porscamera <- readRDS("data/cameratrap/porsanger/processed/porsanger_imported.rds")
 tibble(porscamera)
 
 # obtain aggregated time
@@ -54,4 +54,5 @@ cameratrap2 <- select(cameratrap1, -c(Date,Time,Location,Trigger))
 nrow(porscamera)-nrow(duplicates)/2 == nrow(cameratrap1)
 tibble(cameratrap1)
 
+saveRDS(cameratrap2, "data/cameratrap/porsanger/processed/porsanger_camera_processing1.rds")
 
