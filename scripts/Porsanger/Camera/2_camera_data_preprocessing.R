@@ -11,18 +11,26 @@ porscamera$DateTimeOriginal <- strptime(porscamera$DateTimeOriginal,
                                         format="%d.%m.%Y %H:%M:%S", tz="CET") #Central European Time
 
 # sort data by location and time
-pors1 <- arrange(porscamera,Location, DateTimeOriginal)
-
+# remove the photos triggered automatically
+pors1 <- filter(arrange(porscamera,Location, DateTimeOriginal), Trigger != "T")
+unique(porscamera$Trigger)
 # compute differences between adjacent times
 # differences at the borders of location should always be larger because the data is sorted by station
 difference <- diff(pors1$DateTimeOriginal)
 # which are due to camera settings
-dif1 <- which(abs(difference)<2)
+dif1 <- which(abs(difference)<5)
 
 # slice set of "duplicated" rows
 duprows <- sort(c(dif1,dif1+1))
-duplicates <- porscamera[duprows,]
+duplicates <- pors1[duprows,]
 duplicates$id <- rep(1:(nrow(duplicates)/2), each=2)
+
+# # check short differences
+# dif2 <- which(abs(difference)%in%seq(2,59))
+# duprows2 <- sort(c(dif2,dif2-1,dif2+1))
+# ttt2 <- slice(pors1,duprows2)
+
+#diff(ttt2$DateTimeOriginal)
 
 ## CHECK
 ## check if there are individuals with different ids
@@ -51,8 +59,9 @@ cameratrap1$station <- sapply(cameratrap1$Location, get_station)
 cameratrap2 <- select(cameratrap1, -c(Date,Time,Location,Trigger))
 
 # should be true: it is
-nrow(porscamera)-nrow(duplicates)/2 == nrow(cameratrap1)
-tibble(cameratrap1)
+nrow(pors1)-nrow(duplicates)/2 == nrow(cameratrap1)
+tibble(cameratrap2)
+
 
 saveRDS(cameratrap2, "data/cameratrap/porsanger/processed/porsanger_camera_processing1.rds")
 
