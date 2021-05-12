@@ -9,8 +9,10 @@ library("dplyr")
 
 # spesify filenames, done differently for files made by rolf and files made by eivind
 filenames_E1 <- c("G01_19.csv","G01_20.csv","G02_19.csv","G02_20.csv","G08_19.csv","G08_20.csv")
+
 filenames_E2 <- c("G11_19.txt","G11_20.txt","G11_20_2.txt","G15_19.txt","G15_20.txt","G15_20_2.txt","G16_19.txt",
                   "G16_20.txt","G16_20_2.txt","G19_19.txt","G19_20.txt","G19_20_2.txt","G20_19.txt", "G20_20.txt","G20_20_2.txt")
+
 filenames_R <- c("G_6_2019_2020.xlsx","G4_2018_2019_mai.xlsx","G4_2019_2020.xlsx","G4_2019_jun_aug.xlsx","G4_2020_aug_nov.xlsx","G6__2018_2019.xlsx",   
                  "G6_2020_aug_nov.xlsx","T1-2_2019_2020.xlsx","T1.2_2018_2019.xlsx","T2-2_2018_2019.xlsx","T2_1_2018_2019.xlsx","T2_1_2019_2020.xlsx",
                  "T2_2_2019_2020.xlsx","T3.2_2018_2019.xlsx","T3.2_2019_2020.xlsx","T5.2_2018_2019.xlsx","T5_2_2019_2020.xlsx")
@@ -88,6 +90,7 @@ dat <- rbind(e_dat4,r_dat2)
 dat2 <- filter(dat, !is.na(species))
 tibble(dat2)
 
-# write .rda
+# write .rds
 saveRDS(dat2, file="processed/porsanger_imported.rds")
+
 
