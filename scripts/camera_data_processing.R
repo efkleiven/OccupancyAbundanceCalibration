@@ -1,5 +1,5 @@
 #wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
-wd <- "C:/Eivind/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/cameratrap/porsanger/manual"
 
 setwd(wd)
 dir() # checking what files are in the directory
