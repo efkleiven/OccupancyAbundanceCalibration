@@ -67,7 +67,6 @@ table(e_dat$species)
 unique(e_dat$species)
 
 # remove all empty images(species = NA)
-e_dat3 <- filter(e_dat, !is.na(species))
 e_dat4 <- select(e_dat, Location, Trigger, Date, Time, species)
 str(e_dat4)       
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,7 +85,9 @@ names(r_dat2)[5] <- "species"
 
 #merge rolfs and eivinds files
 dat <- rbind(e_dat4,r_dat2)
-str(dat)
+dat2 <- filter(dat, !is.na(species))
+tibble(dat2)
 
 # write .rda
-save(dat, file="porsanger_imported.rda")
+saveRDS(dat2, file="processed/porsanger_imported.rds")
+
