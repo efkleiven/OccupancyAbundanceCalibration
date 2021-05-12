@@ -55,10 +55,7 @@ cameratrap4 <- filter(cameratrap3,!(species %in% c("empty","unknown")))
 
 saveRDS(cameratrap2, "data/cameratrap/haakoya/processed/haakoya_cameradata_final.rds")
 
-### start from here ###
 cameratrap2 <- readRDS("data/cameratrap/haakoya/processed/haakoya_cameradata_final.rds")
-library(dplyr)
-tibble(cameratrap2)
 
 ct0 <- arrange(cameratrap4,site,DateTimeOriginal)
 ct1 <- filter(ct0, DateTimeOriginal > as.Date("2018-05-20"))
@@ -69,6 +66,7 @@ difference <- diff(ct1$DateTimeOriginal)
 dif5 <- which(abs(difference)<2)
 
 # slice set of "duplicated" rows
+
 duprows <- sort(c(dif5,dif5+1))
 duplicates <- ct1[duprows,]
 duplicates$id <- rep(1:(nrow(duplicates)/2), each=2)
@@ -89,7 +87,7 @@ duplicates3 <- slice(duplicates2, evenpos)
 # remove now useless variable
 duplicates4 <- select(duplicates3, -"id")
 # retrieve non duplicates
-non_dups <- slice(ct1, -dupnumbers)
+non_dups <- slice(ct1, -duprows)
 # join all datasets
 cameratrap5 <- arrange(bind_rows(duplicates4, non_dups), site, DateTimeOriginal)
 
