@@ -9,10 +9,12 @@ library(scales)
 #livetrapdata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
 #cameradata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
 #abundance <- readRDS("/Users/pedronicolau/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
+getwd()
+livetrapdata <- read.csv2("./data/CR_processed.csv", stringsAsFactors = FALSE)
+# cameradata <- read.csv2("./data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
+cameradata <- readRDS("data/cameratrap/porsanger/processed/porsanger_camera_processing1.rds")
 
-livetrapdata <- read.csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
-cameradata <- read.csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
-abundance <- readRDS("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
+abundance <- readRDS("./OccupancyAbundanceCalibration/data/estimated_abundance.rds")
 
 abundance[,3:4] <- round(abundance[,3:4],0)
 
