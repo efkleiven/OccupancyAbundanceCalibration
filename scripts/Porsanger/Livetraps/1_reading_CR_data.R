@@ -16,9 +16,10 @@ setwd(wd)
 ds <- 0 # set counter
 porsdset <- list() #empty list
 
-#usefulvars <- c("year","area","seas","datetime","check","transect","station","trapnum",
-#                "Nindnum","sex","status","weight","species","marked","note")
-
+usefulvars <- c("year","area","seas","datetime","check","transect","station","trapnum",
+                "Nindnum","sex","status","weight","species","marked","note")
+yr=1
+getwd()
 for(yr in 1:length(dir())) #check year in directory
 {
   #set working directory in year yr
@@ -49,7 +50,7 @@ for(yr in 1:length(dir())) #check year in directory
 
 # bind rows
 jointdata <- bind_rows(porsdset)
-
+unique(jointdata$transect)
 ## split datasets by transect ##
 masdata <- filter(jointdata, transect=="MASOY")
 pordata <- filter(jointdata, transect!="MASOY")
@@ -77,5 +78,7 @@ masdata$station <- as.character(sapply(masdata$station,formatGstations))
 
 crdata <- bind_rows(masdata,pordata)
 
-write.csv2(crdata,"/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CRDATA_raw.csv")
+saveRDS(crdata,"/Users/pni026/Documents/OccupancyAbundanceCalibration/data/capture_recapture/porsanger/cr_porsanger_0618_0920.rds")
 #write.csv2(crdata,"C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CRDATA_raw.csv")
+
+unique(crdata$datetime)
