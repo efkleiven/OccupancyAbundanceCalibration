@@ -78,7 +78,6 @@ masdata$station <- as.character(sapply(masdata$station,formatGstations))
 
 crdata <- bind_rows(masdata,pordata)
 
-saveRDS(crdata,"/Users/pni026/Documents/OccupancyAbundanceCalibration/data/capture_recapture/porsanger/cr_porsanger_0618_0920.rds")
+saveRDS(crdata,"~/Documents/OccupancyAbundanceCalibration/data/capture_recapture/porsanger/cr_porsanger_0618_0920.rds")
 #write.csv2(crdata,"C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CRDATA_raw.csv")
 
-unique(crdata$datetime)
