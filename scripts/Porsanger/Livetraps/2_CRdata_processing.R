@@ -2,8 +2,7 @@
 library(dplyr)
 library(readr)
 #read data
-KMdata <- read_delim("/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CRDATA_raw.csv", delim=";")[,-1]
-#KMdata <- read_csv2("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/CRDATA_raw.csv", stringsAsFactors = FALSE)
+KMdata <- readRDS("data/capture_recapture/porsanger/cr_porsanger_0618_0920.rds")
 
 #get rid of NAs
 unique(KMdata$station)
@@ -87,11 +86,12 @@ KMROD <- filter(KM1, species %in% c("FJELLROTTE","GRAASIDEMUS","MARKMUS","ROEDMU
 # table(KM1$weight[KM1$tagged==0])
 # %% MANUAL CHECK %% #
 ### UNTAGGED INDIVIDUALS WHICH WERE GIVEN SAME CODE ON SAME STATION ###
-# # UNME
-# nE <- nrow(KM1[KM1$Nindnum=="UNME",])
-# Elab <- c()
-# for(i in 1:nE) Elab[i] <- paste0("UNME",i)
-# KM1$Nindnum[KM1$Nindnum=="UNME"] <- Elab
+# UNME
+nE <- nrow(KMROD[KMROD$Nindnum=="UNME",])
+Elab <- c()
+for(i in 1:nE) Elab[i] <- paste0("UNME",i)
+KMROD$Nindnum[KMROD$Nindnum=="UNME"] <- Elab
+
 # 
 # # UNMJ
 # nJ <- nrow(KM1[KM1$Nindnum=="UNMJ",])
@@ -122,7 +122,8 @@ KM2 <- left_join(KM1.2,uniqueid)
 # 1+2 = 3 "11"
 idch <- tibble(aggregate(check~year+trapseason+station+id+species,data=KM2, FUN=sum))
 colnames(idch)[ncol(idch)] <- "category"
-
+summary(idch)
+table(idch$category)
 # attach capture history
 KM3 <- tibble(idch)
 KM3$c1 <- ifelse(KM3$category==2,0,1)
@@ -155,8 +156,9 @@ KM6 <- left_join(KM5,uniqueid) # add original id name
 # KM6$transect <- ifelse(KM6$transect=="MASOY","MASOY","PORSANGER")
 KM7 <- left_join(KM6,tseason2[seq(1,nrow(tseason2)-1,2),])
 KM8 <- arrange(KM7, datetime,station,species,c1,id)
-write.csv2(KM7, "/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CR_CaptHist_KMdata.csv")
 
+#write.csv2(KM7, "/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CR_CaptHist_KMdata.csv")
+saveRDS(KM8, "data/capture_recapture/porsanger/CR_CaptHist_0618_0920.rds")
 # filter other species and trap seasons of mid summer
 # KM9 <- filter(KM8, species=="GRAASIDEMUS" & trapseason %in% c(1,3,4,6,7,9))
 # KM10 <- select(KM9, -c(category, species))

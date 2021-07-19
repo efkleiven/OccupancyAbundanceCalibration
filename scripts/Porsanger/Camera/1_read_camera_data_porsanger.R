@@ -67,16 +67,22 @@ e_dat$species <- ifelse(e_dat$DS=="Yes", "DS",
 # check that the species column look ok
 table(e_dat$species)
 unique(e_dat$species)
-
+unique(e_dat$Location)
 # remove all empty images(species = NA)
-e_dat3 <- filter(e_dat, !is.na(species))
 e_dat4 <- select(e_dat, Location, Trigger, Date, Time, species)
-str(e_dat4)       
+str(e_dat4)  
+
+# format time variables
+e_dat4$DateTimeOriginal <- paste0(e_dat4$Date," ",e_dat4$Time)
+e_dat4$DateTimeOriginal <- strptime(e_dat4$DateTimeOriginal,
+                                    format="%d.%m.%Y %H:%M:%S", tz="CET") #Central European Time
+e_dat5 <- tibble(e_dat4)
+e_dat6 <- select(e_dat5, -c(Date,Time))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # format rolfs files
 r_dat1 <- do.call(rbind, R_import)
-
+r_dat1
 # fix time format
 r_dat1$Time <- format(r_dat1$Time, "%H:%M:%S")
 
@@ -84,11 +90,22 @@ r_dat2 <- select(r_dat1, Location, Trigger, Date, Time, Art)
 
 # rename species column to match e_dat
 names(r_dat2)[5] <- "species"
+
+# format date
+r_dat2$DateTimeOriginal <- paste0(as.character(r_dat2$Date)," ",r_dat2$Time)
+r_dat2$DateTimeOriginal <- strptime(r_dat2$DateTimeOriginal,
+                                    format="%Y-%m-%d %H:%M:%S", tz="CET") #Central European Time
+r_dat3 <- select(r_dat2, -c(Date, Time))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#merge rolfs and eivinds files
-dat <- rbind(e_dat4,r_dat2)
-str(dat)
 
-# write .rda
-save(dat, file="processed/porsanger_imported.rda")
+
+#merge rolfs and eivinds files
+dat <- rbind(e_dat6,r_dat3)
+dat2 <- filter(dat, !is.na(species))
+
+# write .rds
+setwd("..")
+saveRDS(dat2, file="processed/porsanger_imported.rds")
+
+

@@ -10,10 +10,6 @@ pnwd <- "~/Documents/OccupancyAbundanceCalibration/"
 
 setwd(pnwd)
 
-#livetrapdata <- read.csv2("data/CR_processed.csv", stringsAsFactors = FALSE)
-#cameradata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
-#abundance <- readRDS("/Users/pedronicolau/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
-
 
 
 # read in camera data
@@ -145,9 +141,41 @@ for(i in 1:4)
 # convert matrix to data frame
 grdf2 <- data.frame(grdf)
 
+# grdf2 <- readRDS("data/haakoya_gr_cameravsltraps.rds")
+# fulldata2 <- readRDS("data/haakoya_densities_cameravsltraps.rds")
 
 summary(lm(grdf2$D100~grdf2$days.31, data=grdf2, subset = station==4))
 
+dat <- fulldata2
+stx <- 4
+summary(lm(dat$DT~dat$`days-31`, data=dat, subset = station==stx))
+summary(lm(dat$DT~dat$days012, data=dat, subset = station==stx))
+summary(lm(dat$DT~dat$days35, data=dat, subset = station==stx))
+
+summary(lm(grdf2$D25~grdf2$days.31))
+summary(lm(fulldata2$DT~fulldata2$`days-31`))
+
+data.frame(head(jointset4,20))
+
+#summary(lm(dat$D25~dat$`days-31`))
+#summary(lm(dat$D25~dat$days012))
+summary(lm(dat$D25~dat$days35))
+
+#summary(lm(dat$D50~dat$`days-31`))
+#summary(lm(dat$D50~dat$days012))
+summary(lm(dat$D50~dat$days35))
+
+#summary(lm(dat$D100~dat$`days-31`))
+#summary(lm(dat$D100~dat$days012))
+summary(lm(dat$D100~dat$days35))
+
+#summary(lm(dat$DT~dat$`days-31`))
+#summary(lm(dat$DT~dat$days012))
+#summary(lm(dat$DT~dat$days35))
+
+
+
+##### 
 library(mgcv)
 gamm(N100~days012, random=station, data = fulldata)
 

@@ -4,7 +4,7 @@ library(dplyr)
 library(INLA)
 
 # set working directory
-crdata <- read.csv2("/Users/pni026/Documents/OccupancyAbundanceCalibration/data/CR_processed.csv", stringsAsFactors = FALSE)
+crdata <- readRDS("data/capture_recapture/porsanger/CR_CaptHist_0618_0920.rds")
 
 crdata2 <- crdata
 
@@ -12,8 +12,8 @@ crdata2 <- crdata
 # add isitNA variable
 crdata2$covNA <- 0
 crdata2$covNA[is.na(crdata2$weight)==TRUE] <- 1
-NAsex <- length(crdata2$sex[is.na(crdata2$sex)==TRUE])
-crdata2$covNA[is.na(crdata2$sex)==TRUE] <- 1
+NAsex <- length(crdata2$sex01[is.na(crdata2$sex01)==TRUE])
+crdata2$covNA[is.na(crdata2$sex01)==TRUE] <- 1
 
 crdata2$chist <- paste0(crdata2$c1,",",crdata2$c2)
 ## obtain capture history variable
@@ -37,9 +37,9 @@ crdata4$chist <- as.factor(ifelse(crdata3$chist == "1,1", "1,0", ifelse(crdata3$
 inladata <- rbind(crdata2,crdata3,crdata4)
 
 # factor variables
-inladata$sex <- as.factor(inladata$sex)
-inladata$station <- as.factor(inladata$station)
-inladata$chist <- as.factor(inladata$chist)
+#inladata$sex01 <- as.factor(inladata$sex01)
+#inladata$station <- as.factor(inladata$station)
+#inladata$chist <- as.factor(inladata$chist)
 # alternative specific index
 inladata$alt.id <- ifelse(inladata$chist=="0,1",1,ifelse(inladata$chist=="1,0",2,3))
 # add repeated variable for INLA 
@@ -59,5 +59,5 @@ inladata3$station.i[seq(1,nrow(inladata3),3)] <-as.character(inladata3$station[s
 
 data4inla <- tibble(inladata3[,-1])
 
-saveRDS(data4inla,"/Users/pedronicolau/OccupancyAbundanceCalibration/data/porsanger_inlaformat.rds")
+saveRDS(data4inla,"data/capture_recapture/porsanger/CHist_porsanger_4INLA.rds")
 

@@ -7,7 +7,7 @@ library(VGAM)
 # set wd
 
 #### functions to estimate abundance ####
-source("~/Documents/OccupancyAbundanceCalibration/scripts/2_2_1_functions.R")
+source("scripts/Porsanger/Livetraps/2_2_1_functions.R")
 
 #### read datasets ####
 # count only data
