@@ -155,6 +155,7 @@ summary(lm(dat$DT~dat$days35, data=dat, subset = station==stx))
 summary(lm(grdf2$D25~grdf2$days.31))
 summary(lm(fulldata2$DT~fulldata2$`days-31`))
 
+data.frame(head(jointset4,20))
 
 #summary(lm(dat$D25~dat$`days-31`))
 #summary(lm(dat$D25~dat$days012))
