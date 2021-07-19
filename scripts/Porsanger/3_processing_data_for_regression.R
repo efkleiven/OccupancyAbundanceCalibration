@@ -41,7 +41,12 @@ livedata$julian <- julian(livedata$datetime,origin = as.Date("2018-06-01"))
 d <- 12 # how many days before
 jdays0 <- unique(livedata$julian)
 for (i in 1:d)
-{jdays0 <- c(jdays0,unique(livedata$julian)+i,unique(livedata$julian)-i)}
+{
+  jdays0 <-
+    c(jdays0,
+      unique(livedata$julian) + i,
+      unique(livedata$julian) - i)
+}
 jdays <- sort(jdays0)
 
 #jdays <- c(unique(livetrapdata$julian),   # day 1 of cr experiment
@@ -109,8 +114,7 @@ for(s in 1:length(specieslab)) {
     # filter by trap season
     camset <- filter(cvolesagg2, trapseason == t)
     
-    
-    
+
     camset2 <- filter(camset, species == specieslab[s])
     camsetabs <-
       as.data.frame.matrix(xtabs(count ~ station + julianlabels, data = camset2))
@@ -201,6 +205,7 @@ grdf2 <- as.data.frame(grdf)
 
 # convert to numeric
 grdf2[,4:ncol(grdf2)] <- sapply(grdf2[,4:ncol(grdf2)], as.numeric)
+
 
 saveRDS(grdf2, "data/cameratrap/porsanger/processed/GR_regression_data_porsanger.rds")
 
