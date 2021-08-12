@@ -59,7 +59,8 @@ whichsp <- function(x)
 df$species <- sapply(df$answer,whichsp)
 
 # select images classified with more than 75% certainty
-df$answer <- ifelse(df$confidence1>0.75,df$guess1,0)
+
+df$answer <- ifelse(df$confidence1>0.95,df$guess1,0)
 
 # df2 <- df[,-c(1:2,4:8,10:13)] # remove useless columns
 df3 <- df[,c(4,9,14,16,21)] # keep informative columns
