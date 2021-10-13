@@ -139,32 +139,32 @@ names(fulldata2)
 # day zero is day of first capture
 # day -1 is day of setting traps
 # day -2 is day before traps
-fulldata2$settingday <- (data.frame(fulldata2)[,18]) # day-1
+fulldata2$previousday <- (data.frame(fulldata2)[,18]) # day-1
+
+fulldata2$experimdays.mean <- apply(fulldata2[,18:21],1,mean) # day-1 to day 1
+fulldata2$previous3day.mean <- apply(fulldata2[,15:17],1,mean) # day -2 to -4
+fulldata2$previous5day.mean <- apply(fulldata2[,13:17],1,mean)
+fulldata2$previous10day.mean <- apply(fulldata2[,8:17],1,mean)
+
+fulldata2$'int1day.mean' <- apply(fulldata2[,17:22],1,mean) # +-1
+fulldata2$'int3day.mean' <- apply(fulldata2[,15:24],1,mean) # +-3
+fulldata2$'int8day.mean' <- apply(fulldata2[,10:29],1,mean) # +-8
+
+### sum variables should be used to GRs ###
+fulldata2$'6daysperiod.sum' <- apply(fulldata2[,17:22],1,sum) # +-1
+fulldata2$'10daysperiod.sum' <- apply(fulldata2[,15:24],1,sum) # +-3
+fulldata2$'20daysperiod.sum' <- apply(fulldata2[,10:29],1,sum) # +-8
 fulldata2$experimdays.sum <- apply(fulldata2[,18:21],1,sum) # day-1 to day 1
 fulldata2$previous3day.sum <- apply(fulldata2[,15:17],1,sum) # day -2 to -4
 fulldata2$previous5day.sum <- apply(fulldata2[,13:17],1,sum)
-fulldata2$previous9day.sum <- apply(fulldata2[,9:17],1,sum)
+fulldata2$previous9day.sum <- apply(fulldata2[,8:17],1,sum)
 
-fulldata2$'6daysperiod.sum' <- apply(fulldata2[,17:22],1,sum) # +-1
-fulldata2$'10daysperiod.sum' <- apply(fulldata2[,15:24],1,sum) # +-3
-fulldata2$'16daysperiod.sum' <- apply(fulldata2[,12:27],1,sum) # +-6
-fulldata2$'20daysperiod.sum' <- apply(fulldata2[,10:29],1,sum) # +-8
+# fulldata2$'6daysperiod.median' <- apply(fulldata2[,17:22],1,median) # +-1
+# fulldata2$'10daysperiod.median' <- apply(fulldata2[,15:24],1,median) # +-3
+# fulldata2$'16daysperiod.median' <- apply(fulldata2[,12:27],1,median) # +-6
+# fulldata2$'20daysperiod.median' <- apply(fulldata2[,10:29],1,median) # +-8
 
-fulldata2$'5daysperiod.sum' <- apply(fulldata2[,17:21],1,sum) # +-1
-fulldata2$'9daysperiod.sum' <- apply(fulldata2[,15:24],1,sum) # +-3
-fulldata2$'19daysperiod.sum' <- apply(fulldata2[,10:29],1,sum) # +-8
-
-fulldata2$'6daysperiod.mean' <- apply(fulldata2[,17:22],1,mean) # +-1
-fulldata2$'10daysperiod.mean' <- apply(fulldata2[,15:24],1,mean) # +-3
-fulldata2$'16daysperiod.mean' <- apply(fulldata2[,12:27],1,mean) # +-6
-fulldata2$'20daysperiod.mean' <- apply(fulldata2[,10:29],1,mean) # +-8
-
-fulldata2$'6daysperiod.median' <- apply(fulldata2[,17:22],1,median) # +-1
-fulldata2$'10daysperiod.median' <- apply(fulldata2[,15:24],1,median) # +-3
-fulldata2$'16daysperiod.median' <- apply(fulldata2[,12:27],1,median) # +-6
-fulldata2$'20daysperiod.median' <- apply(fulldata2[,10:29],1,median) # +-8
-
-saveRDS(fulldata2, "data/calibration/Haakoya//regression_data_haakoya_ab_jul21.rds")
+saveRDS(fulldata2, "data/calibration/Haakoya//regression_data_haakoya_ab_mean.rds")
 
 ### GROWTH RATES
 
