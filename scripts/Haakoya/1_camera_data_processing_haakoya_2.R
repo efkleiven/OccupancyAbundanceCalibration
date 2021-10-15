@@ -77,16 +77,19 @@ ctdata3$month <- format(ctdata3$date, "%Y-%m")
 format(date, "%m/%Y")
 ?strftime
 
+# find filename for photos identified as lemming and least weasel
+filter(ctdata3, species=="lemming")
+filter(ctdata3, species=="least_weasel")
+
 ctdata3$species[ctdata3$species=="lemming"] <- "vole"
 ctdata3$species[ctdata3$species=="least_weasel"] <- "stoat"
+
+table(ctdata3$species)
                 
 #write.csv2(ctdatax, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
 saveRDS(ctdata3, "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_095confidence_processed_haakoya.rds")
 
 
-# find filename for lemming
 
-filter(ctdata3, species=="lemming")
-filter(ctdata3, species=="least_weasel")
 
 
