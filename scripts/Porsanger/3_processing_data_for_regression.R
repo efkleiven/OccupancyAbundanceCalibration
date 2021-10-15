@@ -10,7 +10,6 @@ library(scales)
 #cameradata <- read.csv2("/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
 #abundance <- readRDS("/Users/pedronicolau/OccupancyAbundanceCalibration/data/estimated_abundance.rds")
 getwd()
-
 livetrapdata <- read.csv2("./data/CR_processed.csv", stringsAsFactors = FALSE)
 # cameradata <- read.csv2("./data/camera_data_075confidence_processed.csv", stringsAsFactors = FALSE)
 cameradata <- readRDS("data/cameratrap/porsanger/processed/porsanger_camera_processing1.rds")
@@ -117,6 +116,9 @@ full_df$species[full_df$species=="M"] <- "MARKMUS"
 full_df$species[full_df$species=="R"] <- "ROEDMUS"
 
 unique(full_df$station)
+
+GS_photos_pors <- filter(full_df, species == "GRAASIDEMUS")
+saveRDS(GS_photos_pors, "data/GS_photos_porsanger.rds")
 
 # once again, add all combinations in such a way to get the zero captures
 livextabs <- as.data.frame(xtabs(N.est~station+trapseason+species, data=livedata), stringsAsFactors = FALSE)
