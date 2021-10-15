@@ -3,6 +3,8 @@
 wd1 <- "/Users/pni026/Documents/OccupancyAbundanceCalibration/"
 setwd(wd1)
 
+# this is the old link, should now be data/cameratrap/new_classifications/haakoy,
+# but the data structure is also different, now with folders for each year!
 wd2 <- "data/cameratrap/haakoya"
 
 # look at files in the directory

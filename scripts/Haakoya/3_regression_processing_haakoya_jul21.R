@@ -3,7 +3,7 @@ library(dplyr)
 library(INLA)
 library(scales)
 
-# install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+ #install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 
 
 cameradata <- tibble(readRDS("data/cameratrap/haakoya/processed/haakoya_cameradata_nodup.rds"))
@@ -46,7 +46,7 @@ tdatelist <- list(Jtdates,Rtdates)
 
 updatedcam <- list()
 
-daymargin=11
+daymargin=10
 labels4days <- paste0("d",rep(-daymargin:daymargin,15))
 for ( j in 1:length(tdatelist) ){
   
@@ -81,8 +81,6 @@ joint_camera$count <- 1
 
 
 #### FORMAT DATA FOR ANALYSIS ####
-
-
 cvolesagg <- aggregate(count~station+date+label+trapsession,data=joint_camera, FUN=sum)
 cvolesagg2 <- arrange(cvolesagg,station,trapsession)
 
@@ -125,6 +123,7 @@ for (t in 1:seasnumber) {
 full_df <- tibble(bind_rows(tslist))
 rownames(full_df) <- NULL
 full_df$station <- as.numeric(full_df$station)
+saveRDS(full_df,"data/calibration/Haakoya/tv_photos_haakoya.rds")
 
 jointsetx <- left_join(livetrapdata,full_df, by=c("station", "trapsession"))
 
