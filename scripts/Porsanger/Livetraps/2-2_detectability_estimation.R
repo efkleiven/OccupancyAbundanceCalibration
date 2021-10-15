@@ -16,12 +16,13 @@ data4inla <- readRDS("data/capture_recapture/porsanger/CHist_porsanger_4INLA.rds
 data4inla$weight[is.na(data4inla$weight)] <- mean(data4inla$weight, na.rm=TRUE)
 data4inla$sex01[is.na(data4inla$sex01)] <- 0.5
 
-
+summary(filter(data4inla, species=="GRAASIDEMUS"))
 ### filter species ###
 nspecies <- unique(data4inla$species)
 specieslist <- list()
 for(s in 1:length(nspecies))
 {
+  # s = 1
   data4inla0 <- filter(data4inla, species==nspecies[s])
   
   rawdata <- filter(data4inla0, count == 1)
@@ -67,7 +68,7 @@ for(s in 1:length(nspecies))
   
   # Plots
   print(nspecies[s])       
-  print(quantile(prob_df$p00_inla, c(.025, 0.5, .975)))
+  print(quantile(1-prob_df$p00_inla, c(.025, 0.5, .975)))
   
   # boxplot(prob_df[,c(4,5)], ylim=c(.2,.75))
   
@@ -126,8 +127,25 @@ saveRDS(specab, "data/capture_recapture/porsanger/porsanger_abundance_perspecies
 
 
 
-### other models
+# other models ----
+
 # ------------- Model fitting -------------- #
+
+# VGAM
+rawdata <- filter(data4inla, count == 1 & species == "GRAASIDEMUS")
+table(rawdata$chist)
+mod0 <- vglm(cbind(c1,c2) ~ 1, posbernoulli.t, data = rawdata)
+mod1 <- vglm(cbind(c1,c2) ~ weight, posbernoulli.t, data = rawdata)
+mod2 <- vglm(cbind(c1,c2) ~ weight+sex01, posbernoulli.t, data = rawdata)
+summary(mod2)
+
+# get fitted values from the VGAM model
+totalvgam <- as.data.frame(cbind(rawdata,fitted(mod2)))
+
+colnames(totalvgam)[(ncol(totalvgam)-1):(ncol(totalvgam))] <- c("p1","p2")
+totalvgam$p00.est <- (1-totalvgam$p1)*(1-totalvgam$p2)
+
+quantile((1-totalvgam$p00.est), c(.025,.5,.975))
 
 # #### CR INLA MODEL ####
 # ### MOD 0 ###
