@@ -72,7 +72,6 @@ modi3 <- modwss2
 # compute p1 and p2 based on conditional probability ratios
 # retrieve fitted values
 mod <- modi3
-modi3$summary.random$alt.id
 # obtained fitted probabilities for different capture histories
 fitval <- mod$summary.fitted.values$mean
 length(fitval)
@@ -95,6 +94,7 @@ prob_df$p1_inla <- 1/(alpha011+1)
 prob_df$p2_inla <- 1/(alpha101+1)
 prob_df$p3_inla <- 1/(alpha110+1)
 
+library(scales)
 prob_df$p00_inla <- (1-prob_df$p1_inla)*(1-prob_df$p2_inla)*(1-prob_df$p3_inla)
 hist(1-prob_df$p00_inla, col=alpha("red2",.7), probability = TRUE, breaks = seq(.3,1,.025), ylim=c(0,20))
 abline(v=mean(1-prob_df$p00_inla))
@@ -102,7 +102,7 @@ hist(1-totalvgam$p00.est, col=alpha("blue2",.7), add=TRUE, probability = TRUE, b
 abline(v=mean(1-totalvgam$p00.est))
 
 # Plots
-# quantile(prob_df$p00_inla, c(.025,.975))
+quantile(1-(1-prob_df$p1_inla)*(1-prob_df$p2_inla), c(.025,0.5,.975))
 # boxplot(prob_df[,c(4,5)], ylim=c(.2,.75))
 
 # lump probabilities with individuals
@@ -121,36 +121,40 @@ inlaframe <- partialN_radius(inladf, radius=TRUE)
 #### CR VGAM MODEL ####
 
 # # try out different models
-# library(VGAM)
-# mod0 <- vglm(cbind(c1,c2,c3) ~ 1, posbernoulli.t, data = rawdata)
-# mod1 <- vglm(cbind(c1,c2,c3) ~ wgt, posbernoulli.t, data = rawdata)
-# mod2 <- vglm(cbind(c1,c2,c3) ~ wgt+sex, posbernoulli.tb, data = rawdata)
-# summary(mod2)
-# 
-# # get fitted values from the VGAM model
-# totalvgam <- as.data.frame(cbind(rawdata,fitted(mod1)))
-# 
-# colnames(totalvgam)[(ncol(totalvgam)-2):(ncol(totalvgam))] <- c("p1","p2","p3")
-# totalvgam$p00.est <- (1-totalvgam$p1)*(1-totalvgam$p2)*(1-totalvgam$p3)
-# totalvgam$station <- factor(totalvgam$station, levels=unique(totalvgam$station))
-# vgamdf <- arrange(totalvgam, trapsession,station, id)
-# 
-# vgamframe <- partialN(p00.st.tp=data.frame(vgamdf$p00.est,vgamdf$station,vgamdf$trapsession))
-# 
-# 
-# # add zeros
-# vgamts <- as.data.frame.table(xtabs(N.est~timepoint+station, data=vgamframe))
-# vgamts <- arrange(vgamts,station,timepoint)
-# 
-# estimatedf2 <- left_join(estimatedf1,vgamts)
-# tibble(estimatedf2)
-# colnames(estimatedf2)[4] <- "vgamcr"
-# colnames(estimatedf2)[1] <- "trapsession"
-# estimatedf2$trapsession <- as.numeric(as.character(estimatedf2$trapsession))
-# 
-# 
-# plot(estimatedf2$inlacr, type="l")
-# lines(estimatedf2$vgamcr, type="l", col="blue")
+library(VGAM)
+rawdata <- filter(data4inla0, count==1)
+mod0 <- vglm(cbind(c1,c2,c3) ~ 1, posbernoulli.t, data = rawdata)
+mod1 <- vglm(cbind(c1,c2,c3) ~ wgt, posbernoulli.t, data = rawdata)
+mod2 <- vglm(cbind(c1,c2,c3) ~ wgt+sex, posbernoulli.tb, data = rawdata)
+summary(mod2)
+
+# get fitted values from the VGAM model
+totalvgam <- as.data.frame(cbind(rawdata,fitted(mod2)))
+
+colnames(totalvgam)[(ncol(totalvgam)-2):(ncol(totalvgam))] <- c("p1","p2","p3")
+totalvgam$p00.est <- (1-totalvgam$p1)*(1-totalvgam$p2)*(1-totalvgam$p3)
+
+quantile(1-(1-totalvgam$p1)*(1-totalvgam$p2), c(0.025,0.5,0.975))
+
+totalvgam$station <- factor(totalvgam$station, levels=unique(totalvgam$station))
+vgamdf <- arrange(totalvgam, trapsession,station, id)
+
+vgamframe <- partialN(p00.st.tp=data.frame(vgamdf$p00.est,vgamdf$station,vgamdf$trapsession))
+
+
+# add zeros
+vgamts <- as.data.frame.table(xtabs(N.est~timepoint+station, data=vgamframe))
+vgamts <- arrange(vgamts,station,timepoint)
+
+estimatedf2 <- left_join(estimatedf1,vgamts)
+tibble(estimatedf2)
+colnames(estimatedf2)[4] <- "vgamcr"
+colnames(estimatedf2)[1] <- "trapsession"
+estimatedf2$trapsession <- as.numeric(as.character(estimatedf2$trapsession))
+
+
+plot(estimatedf2$inlacr, type="l")
+lines(estimatedf2$vgamcr, type="l", col="blue")
 
 ##### RAW COUNTS ######
 # add raw counts
