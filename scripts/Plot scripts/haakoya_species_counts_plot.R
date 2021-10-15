@@ -1,12 +1,13 @@
 ## Plot Håkøya Counts over time
 library(data.table)
 library(dplyr)
-cameratrap2 <- readRDS("data/cameratrap/haakoya/processed/haakoya_cameradata_allsp.rds")
+
+cameratrap2 <- readRDS("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_095confidence_processed_haakoya.rds")
 
 # ht0 <- filter(cameratrap2, species %in% c("vole","stoat"))
 cameratrap2$count <- 1
 ht0 <- cameratrap2
-ht0$date <- as.Date(ht0$DateTimeOriginal)
+#ht0$date <- as.Date(ht0$DateTimeOriginal)
 ht1 <- aggregate(count~date+species+site, data=ht0, FUN=sum)
 table(ht1$species)
 hvoledata <- filter(ht1, species=="vole")
@@ -17,28 +18,28 @@ hlweaseldata <- filter(ht1, species=="least_weasel")
 
 
 ### EVERY Month ###
-timewindow <- 14
+timewindow <- 30
 
 DT <- data.table(hvoledata)
 v2 <- DT[, .(vole = sum(count)), 
-         keyby = .(Date = 7 * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
 
 DT <- data.table(hstoatdata)
 
 st2 <- DT[, .(stoat = sum(count)), 
-         keyby = .(Date = 7 * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
 
 DT <- data.table(hlemdata)
 l2 <- DT[, .(lemming = sum(count)), 
-         keyby = .(Date = 7 * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
 
 DT <- data.table(hlweaseldata)
 lw2 <- DT[, .(least_weasel = sum(count)), 
-         keyby = .(Date = 7 * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
 
 DT <- data.table(hshrewdata)
 sh2 <- DT[, .(shrew = sum(count)), 
-         keyby = .(Date = 7 * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
 
 
 v3 <- as.data.frame(v2)
