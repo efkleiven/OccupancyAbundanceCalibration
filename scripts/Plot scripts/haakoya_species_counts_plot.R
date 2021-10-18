@@ -1,17 +1,16 @@
 ## Plot Håkøya Counts over time
 library(data.table)
 library(dplyr)
-<<<<<<< HEAD
+
 # Håkøya data
 # cameratrap2 <- readRDS("data/cameratrap/haakoya/processed/haakoya_cameradata_allsp.rds")
 # Porsanger data
 cameratrap2 <- readRDS("~/Documents/OccupancyAbundanceCalibration/data/camera_porsanger_095_allsp.rds")
 table(cameratrap2$species)
 min(cameratrap2$date)
-=======
+
 
 cameratrap2 <- readRDS("C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/camera_data_095confidence_processed_haakoya.rds")
->>>>>>> 280b244f7b5abb8883c5ca8fee4db85a2f16b7d5
 
 # ht0 <- filter(cameratrap2, species %in% c("vole","stoat"))
 cameratrap2$count <- 1
@@ -27,38 +26,19 @@ hlweaseldata <- filter(ht1, species=="least_weasel")
 min(d4$date)
 
 ### EVERY Month ###
-<<<<<<< HEAD
+
 timewindow <- 30 #days
-
-DT <- data.table(hvoledata)
-v2 <- DT[, .(vole = sum(count)), 
-         keyby = .(Date = timewindow * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
-=======
-timewindow <- 30
-
 DT <- data.table(hvoledata)
 v2 <- DT[, .(vole = sum(count)), 
          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
->>>>>>> 280b244f7b5abb8883c5ca8fee4db85a2f16b7d5
 
 DT <- data.table(hstoatdata)
-
 st2 <- DT[, .(stoat = sum(count)), 
-<<<<<<< HEAD
-         keyby = .(Date = timewindow * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvdata$date))]
 
-DT <- data.table(hlemdata)
-l2 <- DT[, .(lemming = sum(count)), 
-         keyby = .(Date = timewindow * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
-
-DT <- data.table(hlweaseldata)
-lw2 <- DT[, .(least_weasel = sum(count)), 
-         keyby = .(Date = timewindow * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
 
 DT <- data.table(hshrewdata)
 sh2 <- DT[, .(shrew = sum(count)), 
-         keyby = .(Date = timewindow * (as.numeric(date - min(hvdata$date)) %/% timewindow) + min(hvdata$date))]
-=======
          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
 
 DT <- data.table(hlemdata)
@@ -72,8 +52,6 @@ lw2 <- DT[, .(least_weasel = sum(count)),
 DT <- data.table(hshrewdata)
 sh2 <- DT[, .(shrew = sum(count)), 
          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
->>>>>>> 280b244f7b5abb8883c5ca8fee4db85a2f16b7d5
-
 
 v3 <- as.data.frame(v2)
 st3 <- as.data.frame(st2)
