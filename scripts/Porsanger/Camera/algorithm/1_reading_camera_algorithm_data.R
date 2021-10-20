@@ -2,7 +2,7 @@ library(dplyr)
 library(lubridate)
 getwd()
 #wd <- "/Users/pedronicolau/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
-#wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/cameratrap/porsanger"
+wd <- "C:/Eivind/GitProjects/OccupancyAbundanceCalibration/data/cameratrap/new_classifictions/porsanger"
 wd <- "~/Documents/OccupancyAbundanceCalibration/data/cameratrap/new_classifictions/Porsanger"
 setwd(wd)
 dir()
@@ -55,9 +55,11 @@ datas2 <- tibble(datas)
 
 #combine data sets
 ctdata2 <- tibble(datas,ctdata)
+
 # keep only values with confidence above 0.75
 ctdata2$answer <- ifelse(ctdata2$confidence1>0.95,ctdata2$guess1,0)
 ctdata3 <- filter(ctdata2,answer>0)
+
 # is it an animal
 ctdata3$animal <- ifelse(ctdata3$answer>2,1,0)
 hist(ctdata3$confidence1)

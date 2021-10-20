@@ -98,5 +98,5 @@ cameratrap4 <- filter(cameratrap3,!(species %in% c("empty","unknown")))
 
 cameratrap5 <- filter(arrange(cameratrap4,site, DateTimeOriginal), Sequence == "1 2")
 
-saveRDS(cameratrap5, "data/cameratrap/haakoya/processed/haakoya_cameradata_nodup_2.rds")
+saveRDS(cameratrap5, "data/cameratrap/haakoya/processed/haakoya_cameradata_nodup.rds")
 

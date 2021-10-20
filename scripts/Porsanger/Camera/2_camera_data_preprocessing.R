@@ -1,4 +1,6 @@
 setwd("~/OccupancyAbundanceCalibration/data")
+setwd("./data")
+
 getwd()
 library(dplyr)
 porscamera <- readRDS("cameratrap/porsanger/processed/porsanger_imported.rds")
