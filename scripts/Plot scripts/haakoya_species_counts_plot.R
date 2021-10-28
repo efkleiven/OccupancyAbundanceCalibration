@@ -182,11 +182,12 @@ cor.test(d3$shrew,d3$vole)
 pdf("./plots/species_counts_month.pdf", width=16*1.2, height=6*1.2)
 
 par(mfrow=c(1,2))
-plot(d8$Date,log(d8$vole+1), pch=19, ylim=c(0,12), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="", cex=1.5, main="Porsanger")
+plot(d8$Date,log(d8$vole+1), pch=19, ylim=c(0,12), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="", cex=1.5, cex.axis=1.5, cex.lab=1.5)
 points(d8$Date,log(d8$stoat), pch=19, ylim=c(0,8), col=2, type="b", cex=1.5)
 points(d8$Date,log(d8$least_weasel), pch=19, ylim=c(0,8), col=3, type="b", cex=1.5)
 points(d8$Date,log(d8$lemming), pch=19, ylim=c(0,8), col=4, type="b", cex=1.5)
 points(d8$Date,log(d8$shrew), pch=19, ylim=c(0,8), col=7, type="b", cex=1.5)
+text(x=(min(d8$Date)+80), y=11.5, "Porsanger", cex=2)
 
 #lines(smooth.spline(d2$Date,log(d2$stoat),spar=.3), pch=19, ylim=c(0,8), lty=1, type="l", col=2)
 legend("topright",c(
@@ -194,13 +195,14 @@ legend("topright",c(
   "vole sp.",
   "stoat", "least weasel","lemming" ,"shrew"),pch=19, col=c(1,2,3,4,7), bty="n", cex=1.5)
 axis(1, format(seq(min(d8$Date),max(d8$Date),60), "%b %Y"), at = seq(min(d8$Date),max(d8$Date),60),
-     cex=.7)
+     cex.axis=1.5)
 
-plot(d1$Date,log(d3$vole+1), pch=19, ylim=c(0,12), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="", cex=1.5, main="Håkøya")
+plot(d1$Date,log(d3$vole+1), pch=19, ylim=c(0,12), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="", cex=1.5, cex.axis=1.5, cex.lab=1.5)
 points(d1$Date,log(d3$stoat), pch=19, ylim=c(0,8), col=2, type="b", cex=1.5)
 #points(d1$Date,log(d4$least_weasel), pch=19, ylim=c(0,8), col=3, type="b")
 #points(d1$Date,log(d4$lemming), pch=19, ylim=c(0,8), col=4, type="b")
 points(d1$Date,log(d3$shrew), pch=19, ylim=c(0,8), col=7, type="b", cex=1.5)
+text(x=(min(d1$Date)+60), y=11.5, "Håkøya", cex=2)
 
 #lines(smooth.spline(d2$Date,log(d2$stoat),spar=.3), pch=19, ylim=c(0,8), lty=1, type="l", col=2)
 legend("topright",c(
@@ -208,7 +210,7 @@ legend("topright",c(
   #"vole sp.",
   "stoat", "shrew"),pch=19, col=c(1,2,7), bty="n", cex=1.5)
 axis(1, format(seq(min(d1$Date),max(d1$Date),60), "%b %Y"), at = seq(min(d1$Date),max(d1$Date),60),
-     cex=.7)
+     cex.axis=1.5)
 
 dev.off()
 
