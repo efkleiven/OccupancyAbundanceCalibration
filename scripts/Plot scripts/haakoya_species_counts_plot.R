@@ -95,7 +95,106 @@ cor.test(d3$shrew,d3$vole)
 #points(d1$Date,d4$least_weasel, pch=19, ylim=c(0,8), col=3, type="b")
 #points(d1$Date,d4$lemming, pch=19, ylim=c(0,8), col=4, type="b")
 #points(d1$Date,d4$shrew, pch=19, ylim=c(0,8), col=7, type="b")
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# make species plot per station on Håkøya for vole
 
+h1 <- filter(hvoledata, site=="H1")
+h2 <- filter(hvoledata, site=="H2")
+h3 <- filter(hvoledata, site=="H3")
+h4 <- filter(hvoledata, site=="H4")
+
+# montly
+timewindow <- 30 #days
+
+H1 <- data.table(h1)
+v21 <- H1[, .(vole = sum(count)), 
+         keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+H2 <- data.table(h2)
+v22 <- H2[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+H3 <- data.table(h3)
+v23 <- H3[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+H4 <- data.table(h4)
+v24 <- H4[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+v31 <- as.data.frame(v21)
+names(v31)[2]<-"h1"
+v32 <- as.data.frame(v22)
+names(v32)[2]<-"h2"
+v33 <- as.data.frame(v23)
+names(v33)[2]<-"h3"
+v34 <- as.data.frame(v24)
+names(v34)[2]<-"h4"
+
+d1 <- left_join(v32,v31, by="Date")
+d2 <- left_join(d1,v33, by="Date")
+d3 <- left_join(d2,v34, by="Date")
+
+# change wd to save plot
+setwd("./plots")
+
+png(filename = "spatial_cor_hakoya_month.png",width = 480*3, height = 480*1.5)
+
+par(mfrow=c(1,1))
+plot(d3$Date,log(d3$h1+1), pch=19, ylim=c(0,8), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="", cex=1.5, cex.lab=1.5, lwd=2, cex.axis=2, cex.main=2, main="Håkøya")
+lines(d3$Date,log(d3$h2+1), pch=19, lty=1, type="b", col=2, cex=1.5, lwd=2)
+lines(d3$Date,log(d3$h3+1), pch=19, lty=1, type="b", col=3, cex=1.5, lwd=2)
+lines(d3$Date,log(d3$h4+1), pch=19, lty=1, type="b", col=4, cex=1.5, lwd=2)
+legend("topright",c("h1","h2", "h3", "h4"), pch=19, col=c(1:4), bty="n", cex=1.5)
+axis(1, format(seq(min(d1$Date),max(d1$Date),60), "%b %Y"), at = seq(min(d1$Date),max(d1$Date),60),
+     cex=1.5, cex.axis=2)
+
+
+dev.off()
+
+# weekly
+timewindow <- 7 #days
+
+H1 <- data.table(h1)
+v21 <- H1[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+H2 <- data.table(h2)
+v22 <- H2[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+H3 <- data.table(h3)
+v23 <- H3[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+H4 <- data.table(h4)
+v24 <- H4[, .(vole = sum(count)), 
+          keyby = .(Date = timewindow * (as.numeric(date - min(hvoledata$date)) %/% timewindow) + min(hvoledata$date))]
+
+v31 <- as.data.frame(v21)
+names(v31)[2]<-"h1"
+v32 <- as.data.frame(v22)
+names(v32)[2]<-"h2"
+v33 <- as.data.frame(v23)
+names(v33)[2]<-"h3"
+v34 <- as.data.frame(v24)
+names(v34)[2]<-"h4"
+
+d1 <- left_join(v32,v31, by="Date")
+d2 <- left_join(d1,v33, by="Date")
+d3 <- left_join(d2,v34, by="Date")
+
+png(filename = "spatial_cor_hakoya_week.png", width = 480*3, height = 480*1.5)
+par(mfrow=c(1,1))
+plot(d3$Date,log(d3$h1+1), pch=19, ylim=c(0,7), lty=1, type="b", xaxt="n", ylab="photo counts", xlab="",cex=1.5, cex.lab=1.5, lwd=2, cex.axis=2, cex.main=2, main="Håkøya")
+lines(d3$Date,log(d3$h2+1), pch=19, lty=1, type="b", col=2, cex=1.5, lwd=2)
+lines(d3$Date,log(d3$h3+1), pch=19, lty=1, type="b", col=3,cex=1.5, lwd=2)
+lines(d3$Date,log(d3$h4+1), pch=19, lty=1, type="b", col=4, cex=1.5,lwd=2)
+legend("topright",c("h1","h2", "h3", "h4"), pch=19, col=c(1:4), bty="n", cex=1.5)
+axis(1, format(seq(min(d1$Date),max(d1$Date),60), "%b %Y"), at = seq(min(d1$Date),max(d1$Date),60),
+     cex=1.5, cex.axis=2)
+
+dev.off()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # for Porsanger
