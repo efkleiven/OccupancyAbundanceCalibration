@@ -138,7 +138,7 @@ d3 <- left_join(d2,v34, by="Date")
 # change wd to save plot
 setwd("./plots")
 
-png(filename = "spatial_cor_hakoya_month.png",width = 480*3, height = 480*1.5)
+png(filename = "spatial_cor_hakoya_month.png",width = 480*2, height = 480)
 
 par(mfrow=c(1,1))
 plot(d3$Date,log(d3$h1+1), pch=19, ylim=c(0,8), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="", cex=1.5, cex.lab=1.5, lwd=2, cex.axis=2, cex.main=2, main="Håkøya")
@@ -184,9 +184,9 @@ d1 <- left_join(v32,v31, by="Date")
 d2 <- left_join(d1,v33, by="Date")
 d3 <- left_join(d2,v34, by="Date")
 
-png(filename = "spatial_cor_hakoya_week.png", width = 480*3, height = 480*1.5)
+png(filename = "spatial_cor_hakoya_week.png", width = 480*2, height = 480)
 par(mfrow=c(1,1))
-plot(d3$Date,log(d3$h1+1), pch=19, ylim=c(0,7), lty=1, type="b", xaxt="n", ylab="photo counts", xlab="",cex=1.5, cex.lab=1.5, lwd=2, cex.axis=2, cex.main=2, main="Håkøya")
+plot(d3$Date,log(d3$h1+1), pch=19, ylim=c(0,7), lty=1, type="b", xaxt="n", ylab="log(photo counts+1)", xlab="",cex=1.5, cex.lab=1.5, lwd=2, cex.axis=2, cex.main=2, main="Håkøya")
 lines(d3$Date,log(d3$h2+1), pch=19, lty=1, type="b", col=2, cex=1.5, lwd=2)
 lines(d3$Date,log(d3$h3+1), pch=19, lty=1, type="b", col=3,cex=1.5, lwd=2)
 lines(d3$Date,log(d3$h4+1), pch=19, lty=1, type="b", col=4, cex=1.5,lwd=2)
