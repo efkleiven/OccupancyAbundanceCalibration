@@ -2,6 +2,7 @@
 GSVdata <- readRDS("data/cameratrap/porsanger/processed/GS_photos_porsanger.rds")
 TVdata <- readRDS("data/cameratrap/haakoya/processed/tv_photos_haakoya.rds")
 View(TVdata)
+
 # cameras were not in place yet
 GSVdata[GSVdata$trapseason==1,][,4:13] <- NA
 
@@ -30,18 +31,14 @@ exp.days <- c("d1","d2", "d3", "d0")
 before <- paste0("d",-10:-1)
 after <- paste0("d",10:4)
 
+# make 
+#plot(mat2$dist,mat2$value, col=color)
+#lines(smooth.spline(mat2$dist,mat2$value), col=2)
 
-
-
-
-
-
-plot(mat2$dist,mat2$value, col=color)
-lines(smooth.spline(mat2$dist,mat2$value), col=2)
-
+# for Håkøya
 tseasons <- unique(TVdata$trapsession)
 tdf <- data.frame(trapsession=1:15,month=rep(1:5,3))
-TVdata2 <- left_join(TVdata,tdf)
+TVdata2 <- dplyr::left_join(TVdata,tdf)
 
 month <- c("May","June","July","August","September")
 i=1
@@ -69,8 +66,37 @@ for(i in 1:5)
 }
 
 
-## Correlogram for all stations ----
+# for porsanger
+tseasons <- unique(GSVdata$trapseason)
+tdf <- data.frame(trapseason=1:9,month=rep(1:3,3))
+GSdata2 <- dplyr::left_join(GSVdata,tdf)
 
+month <- c("Spring","Summer","Autumn")
+i=1
+par(mfrow=c(1,3))
+stationsRJ <- c("Rolf","Rolf","Rolf","Jon")
+for(i in 1:3)
+{
+  plotdata <- filter(GSdata2, month == i)
+  
+  voledata <- plotdata[,4:24]
+  
+  CR2 <- cor(voledata, use = "pairwise.complete.obs")
+  CR2[upper.tri(CR2)] <- NA
+  diag(CR2) <- NA
+  nCR <- reshape2::melt(CR2, varnames = c('X2', 'X1'), na.rm = TRUE)
+  mat2 <- dplyr::left_join(m,nCR)
+  # mat2 <- filter(mat2,!( X1 %in% exp.days) & !( X2 %in% exp.days))
+  
+  
+  plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
+       main=month[i], col=2, pch=19)
+  lines(smooth.spline(mat2$dist,mat2$value), col=3)
+  
+  abline(h=0.5,lty=2)
+}
+
+## Correlogram for all stations ----
 par(mfrow=c(1,2))
 
 # Pors
