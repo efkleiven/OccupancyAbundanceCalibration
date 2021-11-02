@@ -17,24 +17,78 @@ m <- data.frame(t(combn(rownames(DMAT),2)), dist=DMAT2)
 
 
 # voledata <- GSVdata[,4:24]
-voledata <- TVdata[,3:23]
+#voledata <- TVdata[,3:23]
 
-CR2 <- cor(voledata, use = "pairwise.complete.obs")
-CR2[upper.tri(CR2)] <- NA
-diag(CR2) <- NA
-nCR <- reshape2::melt(CR2, varnames = c('X2', 'X1'), na.rm = TRUE)
-mat2 <- dplyr::left_join(m,nCR)
+#CR2 <- cor(voledata, use = "pairwise.complete.obs")
+#CR2[upper.tri(CR2)] <- NA
+#diag(CR2) <- NA
+#nCR <- reshape2::melt(CR2, varnames = c('X2', 'X1'), na.rm = TRUE)
+#mat2 <- dplyr::left_join(m,nCR)
 
-# make column to say if the data point is from the experimental days or not
+
+# plot the effect of the experiment
+
+# for Håkøya
 
 exp.days <- c("d1","d2", "d3", "d0")
 before <- paste0("d",-10:-1)
 after <- paste0("d",10:4)
 
-# make 
-#plot(mat2$dist,mat2$value, col=color)
-#lines(smooth.spline(mat2$dist,mat2$value), col=2)
+voledata <- TVdata[,3:23]
 
+par(mfrow=c(1,2))
+
+  CR2 <- cor(voledata, use = "pairwise.complete.obs")
+  CR2[upper.tri(CR2)] <- NA
+  diag(CR2) <- NA
+  nCR <- reshape2::melt(CR2, varnames = c('X2', 'X1'), na.rm = TRUE)
+  mat2 <- dplyr::left_join(m,nCR)
+
+  #plot all data points 
+  plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
+       main="With Experimental days", col=2, pch=19)
+  lines(smooth.spline(mat2$dist,mat2$value), col=3)
+  abline(h=0.5,lty=2)
+
+  # remove experimental days
+  mat2 <- filter(mat2,!( X1 %in% exp.days) & !( X2 %in% exp.days))
+  
+  # plot without experimental days
+  plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
+       main="Without Experimental days", col=2, pch=19)
+  lines(smooth.spline(mat2$dist,mat2$value), col=3)
+  abline(h=0.5,lty=2)
+  
+# For Porsanger
+  
+  voledata <- GSVdata[,4:24]
+  
+  par(mfrow=c(1,2))
+  
+  CR2 <- cor(voledata, use = "pairwise.complete.obs")
+  CR2[upper.tri(CR2)] <- NA
+  diag(CR2) <- NA
+  nCR <- reshape2::melt(CR2, varnames = c('X2', 'X1'), na.rm = TRUE)
+  mat2 <- dplyr::left_join(m,nCR)
+  
+  #plot all data points 
+  plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
+       main="With Experimental days", col=2, pch=19)
+  lines(smooth.spline(mat2$dist,mat2$value), col=3)
+  abline(h=0.5,lty=2)
+  
+  # remove experimental days
+  mat2 <- filter(mat2,!( X1 %in% exp.days) & !( X2 %in% exp.days))
+  
+  # plot without experimental days
+  plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
+       main="Without Experimental days", col=2, pch=19)
+  lines(smooth.spline(mat2$dist,mat2$value), col=3)
+  abline(h=0.5,lty=2)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# plot the different trapping seasons separate
 # for Håkøya
 tseasons <- unique(TVdata$trapsession)
 tdf <- data.frame(trapsession=1:15,month=rep(1:5,3))
