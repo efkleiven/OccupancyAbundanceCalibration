@@ -1,6 +1,6 @@
 ABDF_h <- readRDS("data/calibration/Haakoya/regression_data_haakoya_ab_jul21.rds")
-ABDF_hm <- readRDS("data/calibration/Haakoya/regression_data_haakoya_ab_mean.rds")
-GRDF_h <- readRDS("data/calibration/Haakoya/GR_regression_data_haakoya_jul21.rds")
+# ABDF_hm <- readRDS("data/calibration/Haakoya/regression_data_haakoya_ab_mean.rds")
+GRDF_h <- tibble(readRDS("data/calibration/Haakoya/GR_regression_data_haakoya_jul21.rds"))
 getwd()
 
 ### REGRESSION ####
@@ -10,10 +10,10 @@ library(dplyr)
 # for the GR dataset, trapseason 2 correponds to season 2 - season 1, thus it needs to be removed
 
 
-filtdataab <- ABDF_hm
-filtdatagr <- select(GRDF_h, -`16daysperiod.sum`)
+filtdataab <- ABDF_h
+filtdatagr <- GRDF_h
 
-names(filtdataab)
+names(filtdatagr)
 
 modcoefs <- matrix(NA,ncol=3,nrow=8)
 
@@ -32,8 +32,13 @@ for(i in 1:nrow(modcoefs))
   colnames(newAB)[4] = colnames(newGR)[4] = "var"
   
   modGR <- npreg::ss(newGR$Dens,newGR$var
-                     ,method="REML"
-                     )
+                     ,method="REML")
+  predy <- modGR$y
+  modGR$y(newGR$Dens,newGR$var,method="REML")
+  modpred <- npreg::ss(predy,newGR$Dens,method="REML")
+  plot(modpred)
+  summary(modpred)
+
   modAB <- npreg::ss(newAB$Dens,newAB$var
                      ,method="REML"
                      )
@@ -42,9 +47,9 @@ for(i in 1:nrow(modcoefs))
   modcoefs[i,2] <- summary(modAB)$r.squared
   modcoefs[i,3] <- summary(modGR)$r.squared
   # 
-  # plot(modGR, main=plotlab[i], ylab="Density Index (GR)",
-  #      xlab="Camera Triggers (GR)", ylim=c(-2,2))
-  # points(newGR$Dens,newGR$var, pch=19, col=scales::alpha(3,.4))
+  plot(modGR, main=plotlab[i], ylab="Density Index (GR)",
+       xlab="Camera Triggers (GR)", ylim=c(-2,2))
+  points(newGR$Dens,newGR$var, pch=19, col=scales::alpha(3,.4))
   # 
   # abline(0,1,lty=2)
   # r2x <- round(summary(modGR)$adj.r.squared,3)
@@ -145,3 +150,16 @@ lines(smooth.spline(GRDF$Abundance_HT,GRDF$`9daysperiod.mean`,spar=1))
 abline(a=0,b=1, col="red")
 abline(a=5.4,b=0.26, col="red")
 
+
+mod1 <- npreg::ss(newGR$Abundance_HT,newGR$var,method="REML")
+plot(mod1)
+points(newGR$Abundance_HT,newGR$var, pch=19)
+predy <- mod1$y
+predx <- mod1$x
+
+plot(predy,predx)
+modpred <- npreg::ss(predy,predx,method="REML")
+plot(modpred)
+
+sf1 <- splinefun(predy,predx)
+sf2 <- splinefun(newGR$Abundance_HT,newGR$var)
