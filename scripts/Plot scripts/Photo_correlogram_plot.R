@@ -27,15 +27,16 @@ mat2 <- dplyr::left_join(m,nCR)
 plot(mat2$dist,mat2$value)
 lines(smooth.spline(mat2$dist,mat2$value), col=2)
 
-
 i=1
 par(mfrow=c(2,3))
 stationsRJ <- c("Rolf","Rolf","Rolf","Jon")
 for(i in 1:4)
 {
-  plotdata <- filter(TVdata, station==i)
-
-  voledata <- plotdata[,3:23]
+  pdata <- filter(TVdata, station==i)
+  for(t in 1:length(max(TVdata$trapsession)))
+    {
+    plotdata <- 
+    voledata <- plotdata[,3:23]
   
   CR2 <- cor(voledata, use = "pairwise.complete.obs")
   CR2[upper.tri(CR2)] <- NA
@@ -46,8 +47,10 @@ for(i in 1:4)
   plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
        main=paste0(stationsRJ[i]," (Station ", i,")"))
   lines(smooth.spline(mat2$dist,mat2$value), col=2)
+  }
   
   abline(h=0.5,lty=2)
+
 }
 
 voledata <- GSVdata[,4:24]
