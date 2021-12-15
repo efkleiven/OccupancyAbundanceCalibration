@@ -163,7 +163,7 @@ fulldata2$previous9day.sum <- apply(fulldata2[,8:17],1,sum)
 # fulldata2$'16daysperiod.median' <- apply(fulldata2[,12:27],1,median) # +-6
 # fulldata2$'20daysperiod.median' <- apply(fulldata2[,10:29],1,median) # +-8
 
-saveRDS(fulldata2, "data/calibration/Haakoya//regression_data_haakoya_ab_mean.rds")
+saveRDS(fulldata2, "data/calibration/Haakoya/regression_data_haakoya_ab_mean.rds")
 
 ### GROWTH RATES
 

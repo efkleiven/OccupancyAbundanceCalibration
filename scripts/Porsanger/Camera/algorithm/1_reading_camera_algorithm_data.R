@@ -70,13 +70,12 @@ ctdata3$julian <- julian(as.Date(ctdata3$date), origin=as.Date("2018-06-15"))
 ctdata3$weekofyear <- as.numeric(strftime(as.Date(ctdata3$date), format = "%V"))
 ctdata3$month <- format(ctdata3$date, "%Y-%m")
 
+ctdata4 <- filter(ctdata3, species != "empty")
+table(ctdata4$species)
 
-format(date, "%m/%Y")
-?strftime
-#write.csv2(ctdatax, "/Users/pedronicolau/OccupancyAbundanceCalibration/data/camera_data_075confidence_processed.csv")
-saveRDS(ctdata3, "~/Documents/OccupancyAbundanceCalibration/data/camera_data_095confidence_processed.rds")
+saveRDS(ctdata4, "~/Documents/OccupancyAbundanceCalibration/data/camera_porsanger_095_allsp.rds")
 
-### additional exploratory stuff ###
+### additional exploratory stuff ####
 
  # Eivind can't run most of the code below here?
 
