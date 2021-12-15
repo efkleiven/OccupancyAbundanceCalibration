@@ -10,7 +10,7 @@ getwd()
 
 ### REGRESSION ####
 library(dplyr)
-
+library(npreg)
 # for trap season 1, we have missing values for all the photos taken before the trapping
 # for the GR dataset, trapseason 2 correponds to season 2 - season 1, thus it needs to be removed
 
@@ -53,8 +53,9 @@ plot_pors <- function(dataAB = filtdataab,dataGR = filtdatagr,var = "GR",smethod
       modGR <- npreg::ss(newGR$Abundance_HT, newGR$var, method = smethod)
       modAB <- npreg::ss(newAB$Abundance_HT, newAB$var, method = smethod)
       
-      lmodGR <- lm(newGR$Abundance_HT~ newGR$var, method = smethod)
-      lmodAB <- lm(newAB$Abundance_HT, newAB$var, method = smethod)
+      lmodGR <- lm(newGR$Abundance_HT~ newGR$var)
+      lmodAB <- lm(newAB$Abundance_HT~ newAB$var)
+      
       
       modlistAB[[i]] <- modAB
       modlistGR[[i]] <- modGR
@@ -93,7 +94,8 @@ plot_pors <- function(dataAB = filtdataab,dataGR = filtdatagr,var = "GR",smethod
     mdf <- data.frame(var=modcoefs[,1],AB_R2=as.numeric(modcoefs[,2]),AB_DF=as.numeric(modcoefs[,3]),
                       GR_R2=as.numeric(modcoefs[,4]), GR_DF=as.numeric(modcoefs[,5]))
     return(list(modcoefs=mdf, modelsAB=modlistAB,modelsGR=modlistGR))}
-  }
+}
+
 plot_pors(dataAB=filtdataab_m,dataGR=filtdatagr_m,
           var="Ab", smethod="REML")
 
