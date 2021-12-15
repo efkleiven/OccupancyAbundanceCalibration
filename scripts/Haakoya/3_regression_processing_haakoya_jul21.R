@@ -46,7 +46,7 @@ tdatelist <- list(Jtdates,Rtdates)
 
 updatedcam <- list()
 
-daymargin=10
+daymargin=25
 labels4days <- paste0("d",rep(-daymargin:daymargin,15))
 for ( j in 1:length(tdatelist) ){
   
@@ -134,20 +134,66 @@ fulldata2$D50 <- fulldata2$N50/fulldata2$nt50
 fulldata2$D100 <- fulldata2$N100/fulldata2$nt100
 fulldata2$DT <- fulldata2$N.est/fulldata2$ntNA
 
+
+### Interval variables ----
+
+jointset0 <- fulldata2[,c("trapsession","station","D25","D50","DT")]
+centerpos <- which(colnames(fulldata2)=="d1")
+
+val = 0
+
+for(i in 1:12)
+{
+  var_up <- centerpos+val
+  var_lo <- centerpos-val
+  fullname <- paste0("int_",var_up-var_lo)
+  x <- apply(fulldata2[var_lo:var_up],1,mean)
+  jointset0$x <- x
+  colnames(jointset0)[5+i] <- fullname
+  val=val+1
+  
+}
+jointset0$previousday <-  fulldata2$`d-1`
+saveRDS(jointset0, "data/haakoya_mean_intervals.rds")
+
+
+## Previous days only ----
+
+jointset1 <- fulldata2[,c("trapsession","station","D25","D50","DT")]
+centerpos <- which(colnames(fulldata2)=="d-1")
+
+val = 0
+for(i in 1:22)
+{
+  var_up <- centerpos
+  var_lo <- centerpos-val
+  fullname <- paste0("int_",var_up-var_lo)
+  x <- apply(fulldata2[var_lo:var_up],1,mean)
+  jointset1$x <- x
+  colnames(jointset1)[5+i] <- fullname
+  val=val+1
+  
+}
+View(fulldata2)
+
+saveRDS(jointset1, "data/haakoya_mean_intervals_prewindow.rds")
+
+#####
 names(fulldata2)
 # day zero is day of first capture
 # day -1 is day of setting traps
 # day -2 is day before traps
-fulldata2$previousday <- (data.frame(fulldata2)[,18]) # day-1
+fulldata2$previousday <- (data.frame(fulldata2)[,17]) # day-1
+names(fulldata2)
 
-fulldata2$experimdays.mean <- apply(fulldata2[,18:21],1,mean) # day-1 to day 1
-fulldata2$previous3day.mean <- apply(fulldata2[,15:17],1,mean) # day -2 to -4
-fulldata2$previous5day.mean <- apply(fulldata2[,13:17],1,mean)
-fulldata2$previous10day.mean <- apply(fulldata2[,8:17],1,mean)
+fulldata2$experimdays.sum <- apply(fulldata2[,18:21],1,sum) # day-1 to day 1
+fulldata2$previous3day.sum <- apply(fulldata2[,15:17],1,sum) # day -2 to -4
+fulldata2$previous5day.sum <- apply(fulldata2[,13:17],1,sum)
+fulldata2$previous10day.sum <- apply(fulldata2[,8:17],1,sum)
 
-fulldata2$'int1day.mean' <- apply(fulldata2[,17:22],1,mean) # +-1
-fulldata2$'int3day.mean' <- apply(fulldata2[,15:24],1,mean) # +-3
-fulldata2$'int8day.mean' <- apply(fulldata2[,10:29],1,mean) # +-8
+fulldata2$'int1day.sum' <- apply(fulldata2[,17:22],1,sum) # +-1
+fulldata2$'int3day.sum' <- apply(fulldata2[,15:24],1,sum) # +-3
+fulldata2$'int8day.sum' <- apply(fulldata2[,10:29],1,sum) # +-8
 
 ### sum variables should be used to GRs ###
 fulldata2$'6daysperiod.sum' <- apply(fulldata2[,17:22],1,sum) # +-1
@@ -163,7 +209,7 @@ fulldata2$previous9day.sum <- apply(fulldata2[,8:17],1,sum)
 # fulldata2$'16daysperiod.median' <- apply(fulldata2[,12:27],1,median) # +-6
 # fulldata2$'20daysperiod.median' <- apply(fulldata2[,10:29],1,median) # +-8
 
-saveRDS(fulldata2, "data/calibration/Haakoya/regression_data_haakoya_ab_mean.rds")
+saveRDS(fulldata2, "data/calibration/Haakoya/regression_data_haakoya_ab_sum.rds")
 
 ### GROWTH RATES
 
@@ -192,6 +238,6 @@ grdf2 <- as.data.frame(grdf)
 grdf2[,3:ncol(grdf2)] <- sapply(grdf2[,3:ncol(grdf2)], as.numeric)
 tail(grdf2,50)
 grdf3 <- select(grdf2, -c(nt25,nt50,nt100,ntNA))
-
-saveRDS(grdf3, "data/calibration/Haakoya/GR_regression_data_haakoya_jul21.rds")
+View(grdf3)
+saveRDS(grdf3, "data/calibration/Haakoya/GR_regression_data_haakoya_sum.rds")
 
