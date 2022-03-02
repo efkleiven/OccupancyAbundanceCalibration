@@ -225,6 +225,7 @@ densityinterval <- function(x0,y0, min=.40, max=.75)
 
 library(doParallel)
 unstations <- unique(originaldata$station)
+originaldata <- porpre
 imax=12
 for(i in 1:imax)
 {
@@ -237,7 +238,6 @@ for(i in 1:imax)
   predDens <- foreach::foreach(s=1:length(unique(unstations)),.combine=rbind) %dopar% 
     pred_general(dataset=newGR,ustation=unstations[s],gr=FALSE)
   
-  print(apply(predDens,2,mean))
-  print(sqrt(mean(predDens$bias^2)))
-  
+  print(round(c(apply(predDens,2,mean),sqrt(mean(predDens$bias^2))),3))
+
 }

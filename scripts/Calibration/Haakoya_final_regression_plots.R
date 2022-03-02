@@ -1,6 +1,14 @@
 # Linear Models - only abundance - Haakoya
 
-# Porsanger 
+lmp <- function (modelobject) {
+  if (class(modelobject) != "lm") stop("Not an object of class 'lm' ")
+  f <- summary(modelobject)$fstatistic
+  p <- pf(f[1],f[2],f[3],lower.tail=F)
+  attributes(p) <- NULL
+  return(p)
+}
+
+# Hakoya 
 hakmean <- readRDS("data/haakoya_mean_intervals.rds")
 str(hakmean)
 unique(hakmean$station)
@@ -30,8 +38,8 @@ for(i in 1:12)
 par(mfrow=c(2,2))
 par(mfrow=c(1,1))
 
-(hakintdf <- data.frame(int=paste0(round(int.vec,2),"±",round(se.vec.int,2)),
-                     coef=paste0(round(b.vec,2),"±",round(se.vec.b,2)),
+(hakintdf <- data.frame(int=paste0("$",round(int.vec,2),"pm",round(se.vec.int,2),"$"),
+                        coef=paste0("$",round(b.vec,2),"pm",round(se.vec.b,2),"$"),
                      R2=round(r2.vec,3),P=round(p.vec,3),
                      varnames=names(hakmean)[6:(ncol(hakmean)-1)]))
 plot(c(1,seq(3,23,2)),hakintdf$R2[c(1:12)], xlab= "Time Window (days)",ylab=bquote(R^2), pch=19, col=alpha("gray20",.5), type="b",lty=2,
