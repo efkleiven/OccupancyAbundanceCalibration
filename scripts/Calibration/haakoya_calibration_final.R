@@ -1,4 +1,4 @@
-# Porsanger Analysis and Plots (abundance) -----
+# Hakoya Analysis and Plots (abundance) -----
 
 # Linear Models - only abundance - Porsanger
 colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73", 
@@ -116,7 +116,7 @@ par(mfrow=c(1,1))
   
   plot(expseq,expredv[,1], type="l", ylab="Abundance (mean)",
        xlab="CT-counts (previous day)",
-       , ylim=c(0,12), xlim=c(exp(min(seqx)),exp(max(seqx))), main = "Håkøya",
+       ylim=c(0,12), xlim=c(exp(min(seqx)),exp(max(seqx))), main = "Tundra Vole",
        # xlim=c(0,1) # Pors
   )
   
@@ -127,7 +127,7 @@ par(mfrow=c(1,1))
   #mtext("(log Growth rates)",side=1, line=3.5, cex=0.8)
   
   polygon(c(expseq,c(rev(expseq))),c(expredv[,2], rev(expredv[,3])),
-          col = scales::alpha("gold",0.8), border = NA)
+          col = scales::alpha(colorBlindBlack8[3],0.9), border = NA)
   lines(expseq,exp(predicted_v[,1]), type="l", lty=1)
   lines(expseq,exp(predicted_v[,2]), type="l", lty=2)
   lines(expseq,exp(predicted_v[,3]), type="l", lty=2)
