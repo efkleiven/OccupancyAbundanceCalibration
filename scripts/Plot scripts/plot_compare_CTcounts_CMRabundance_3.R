@@ -38,7 +38,7 @@ cr <- readRDS("porsanger_abundance_perspecies.rds")
 time <- cr$datetime[1:9]  # removing dates for the removed G19 season (where flash failed)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# prepare data from Håkøya
+# prepare data from H?k?ya
 
 # latest file for abundance encompassing days 
 setwd("C:/Users/ekl013/OneDrive - UiT Office 365/GitProjects/OccupancyAbundanceCalibration/data")
@@ -48,7 +48,7 @@ summary(HaD)
 # transform to log(x + 1)
 HaD[,4:ncol(HaD)]<- log(HaD[,4:ncol(HaD)]+1)
 
-# mean per season for best variable (int_2) and CMR estimated abundace
+# mean per season for best variable (previous day) and CMR estimated abundace (D50)
 hamean_ct <- aggregate(previousday~trapsession,data=HaD, FUN=mean)
 hamean_cmr <- aggregate(D50~trapsession,data=HaD, FUN=mean)
 
