@@ -86,8 +86,6 @@ par(mfrow=c(1,2))
   lines(smooth.spline(mat2$dist,mat2$value), col=3)
   abline(h=0.5,lty=2)
 
-<<<<<<< HEAD
-=======
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # plot the different trapping seasons separate
@@ -97,24 +95,20 @@ tdf <- data.frame(trapsession=1:15,month=rep(1:5,3))
 TVdata2 <- dplyr::left_join(TVdata,tdf)
 
 month <- c("May","June","July","August","September")
->>>>>>> 465bca0e0705ed9bb339eeb4a8b9c148f721fe0b
 i=1
 par(mfrow=c(2,3))
 stationsRJ <- c("Rolf","Rolf","Rolf","Jon")
 for(i in 1:5)
 {
-<<<<<<< HEAD
   pdata <- filter(TVdata, station==i)
   for(t in 1:length(max(TVdata$trapsession)))
     {
     plotdata <- 
     voledata <- plotdata[,3:23]
-=======
   plotdata <- filter(TVdata2, month == i)
 
   voledata <- plotdata[,3:23]
->>>>>>> 465bca0e0705ed9bb339eeb4a8b9c148f721fe0b
-  
+
   CR2 <- cor(voledata, use = "pairwise.complete.obs")
   CR2[upper.tri(CR2)] <- NA
   diag(CR2) <- NA
@@ -124,15 +118,10 @@ for(i in 1:5)
 
   
   plot(mat2$dist,mat2$value, ylim=c(-.2,1), xlab = "Days apart", ylab="Correlation in Number of Photos", 
-<<<<<<< HEAD
        main=paste0(stationsRJ[i]," (Station ", i,")"))
-  lines(smooth.spline(mat2$dist,mat2$value), col=2)
-  }
-=======
-       main=month[i], col=2, pch=19)
+  lines(smooth.spline(mat2$dist,mat2$value), col=2,  main=month[i], col=2, pch=19)
   lines(smooth.spline(mat2$dist,mat2$value), col=3)
->>>>>>> 465bca0e0705ed9bb339eeb4a8b9c148f721fe0b
-  
+
   abline(h=0.5,lty=2)
 
 }

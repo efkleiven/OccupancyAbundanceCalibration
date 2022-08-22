@@ -1,18 +1,22 @@
 
 ## Compute growth_rates for Håkøya and Porsanger
 library(dplyr)
+# choose either Hakoya or Porsanger, pre-cmr windows or cmr-encompassing
 ####### Håkøya #######
-Porsanger=FALSE
-dat4hak <- readRDS("data/haakoya_mean_intervals.rds")
-dat4hak[,3:ncol(dat4hak)]<- log(dat4hak[,3:ncol(dat4hak)]+1)
-nheader=2 # 2 for Haakoya, 3 Pors
-jointset5 <- dat4hak
-ntp <- length(unique(jointset5$trapsession)) # Hakoya
-correctfactor <- 0
+# Porsanger=FALSE
+# #dat4hak <- readRDS("data/haakoya_mean_intervals.rds") # including
+# dat4hak <- readRDS("data/haakoya_mean_intervals_prewindow.rds") # pre-windows
+# dat4hak[,3:ncol(dat4hak)]<- log(dat4hak[,3:ncol(dat4hak)]+1)
+# nheader=2 # 2 for Haakoya, 3 Pors
+# jointset5 <- dat4hak
+# ntp <- length(unique(jointset5$trapsession)) # Hakoya
+# correctfactor <- 0
 
 ####### Porsanger #######
 # Porsanger=TRUE
-# porD <- readRDS("data/porsanger_mean_intervals.rds")
+# # porD <- readRDS("data/porsanger_mean_intervals.rds")
+# #PorD <- readRDS("data/porsanger_mean_intervals_prewindow.rds")
+# 
 # dat4pors <- dplyr::filter(PorD, species=="GRAASIDEMUS" & trapseason > 1 & !(station == "G19" & trapseason <= 6))
 # dat4pors$Abundance_HT  <- dat4pors$Abundance_HT/16 # divide by number of traps
 # dat4pors[,4:ncol(dat4pors)]<- log(dat4pors[,4:ncol(dat4pors)]+1)

@@ -81,7 +81,7 @@ lines(1:12,porpredf$R2[1:12], xlab= "Time Window (days)",ylab=bquote(R^2),
 # points(4,porpredf$R2[4], col=alpha(4,1), pch=15, cex=1.5)
 
 plot(pormean$int_8~pormean$Abundance_HT, pch=19, col=colorBlindBlack8[6], 
-     main=paste0("5-day interval"), ylab="log mean CT-counts", xlab="log mean CMR-Abundance")
+     main=paste0("9-day interval"), ylab="log mean CT-counts", xlab="log mean CMR-Abundance")
 
 mtext(bquote(R^2== .(round(r2.vec[4],2))), cex=1, line=0.3)
 
